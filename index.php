@@ -35,6 +35,22 @@ function output_all_tags($DBname,$linkid) {
     }
 }
 
+// print all the postings to the page
+function print_postings($DBname, $linkid, $repeat) {
+    mysql_select_db($DBname, $linkid);
+    
+    for($i = 0; $i < $repeat; $i++) {
+        $result = mysql_query("SELECT * FROM postings");    
+        while($row = mysql_fetch_array($result)) {
+            echo "<DIV class='posting'>";
+                echo "<DIV class='photo'><IMG src='' /></DIV>";
+                echo $row['email'].", ".$row['dateadded'].", ".$row['refreshed'];
+//              echo "<SPAN class='tags'>".$row['tags']."</SPAN>";
+            echo "</DIV>";
+        }
+    }
+}
+
 
 //
 // Main
@@ -52,9 +68,13 @@ if (!$linkid) {
 
 // Begin site
 
-echo "<div class'container'>";
-output_all_tags($DBname,$linkid);
-echo "</div>";
+echo "<DIV class='container'>";
+    echo "<DIV class='header'>"; echo "Pet Search <IMG src='' />"; echo "</DIV>";
+    echo "<DIV class='intro'>"; echo "</DIV>";
+    echo "<DIV class='main'>";
+        print_postings($DBname, $linkid, 5);
+    echo "</DIV>";
+echo "</DIV>";
 
 
 
