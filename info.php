@@ -1,0 +1,3 @@
+Pet
+
+<?php phpinfo(); ?>
