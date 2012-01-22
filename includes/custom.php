@@ -34,12 +34,12 @@ function print_postings($DBname, $linkid, $repeat) {
     mysql_select_db($DBname, $linkid);
     
     for($i = 0; $i < $repeat; $i++) {
-        $result = mysql_query("SELECT * FROM postings");    
+        $result = mysql_query("SELECT * FROM postings ORDER BY daterefreshed DESC LIMIT 100");    
         while($row = mysql_fetch_array($result)) {
             echo "<DIV class='posting'>";
                 echo "<DIV class='photo'><IMG src='' /></DIV>";
-                echo "<A href=''>".$row['email']."</A>, ".$row['dateadded'].", ".$row['refreshed'];
-//              echo "<SPAN class='tags'>".$row['tags']."</SPAN>";
+                echo "<P><A href=''>".$row['email']."</A>, ".$row['daterefreshed'].", ".$row['refreshed']."</P>";
+                echo "<P>".$row['species'].": ".$row['tags']."</P>";
             echo "</DIV>";
         }
     }

@@ -25,9 +25,7 @@ echo "<DIV class='container'>";
         echo "I've lost a <A href='#male'>Male</A> / <A href='#female'>Female</A> dog. We want to be able to click male or female and have the list below change to reflect the choice. The list should initially load with everything.";
     echo "</DIV>";
     echo "<DIV class='main' id='main'>";
-    echo "<DIV id='loading'>Loading...</DIV>";
         print_postings($DBname, $linkid, 5);
-    echo "</DIV>";
 echo "</DIV>";
 
 mysql_close($linkid);

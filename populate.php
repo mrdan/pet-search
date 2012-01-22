@@ -78,10 +78,20 @@ function generate_email($count, $unique) {
         return $userlist;
 }
 
+// return a string containing a species
+function rand_species() {
+    $species = Array("dog","cat","goat","giraffe","fox","pokemon");
+    $pet_species = $species[array_rand($species,1)];                    // take one species
+
+    return $pet_species;
+}
+
 // returns an array containing $count strings containing a set of pet tags. $unique == 1 means return only unique sets (doesn't compare order of tags)
-function generate_pet($count, $unique) {
-    $species = Array("dog","cat","goat","giraffe");
-    $descrip = Array("long-haired","brown","lazy","playful","short-haired","black","white");
+function rand_tags($count, $unique) {
+
+    $descrip = Array("long-haired","brown","lazy","playful","short-haired","black","white", "quick", "yellow", 
+                     "red", "grey", "tabby", "tortoise-shell", "orange", "green-eyed", "yellow-eyed", "nervous", "friendly"
+                     );
     
     $petlist = Array();
     $descrip_size = count($descrip);
@@ -91,7 +101,6 @@ function generate_pet($count, $unique) {
         $pet_descrip_keys = Array();
         $descrip_string = "";
 
-        $pet_species = $species[array_rand($species,1)];                    // take one species
         $specificity = rand(1,$descrip_size);                               // decide how many tags we want this post to have (at least one, not counting species)
 
         if ($specificity == 1)
@@ -103,13 +112,20 @@ function generate_pet($count, $unique) {
             $pet_descrip[$x] = $descrip[$pet_descrip_keys[$x]];
         }
         $descrip_string = implode(" ", $pet_descrip);
-        $petlist[$i] = $pet_species." ".$descrip_string;
+        $petlist[$i] = $descrip_string;
     }
     
     if($unique == 1)
         return array_unique_compact($petlist);
     else
         return $petlist;
+}
+
+// give us a random date string betwen $start and $end in the mySQL format YYYY-MM-DD
+function rand_date($start, $end) {
+    $sometime = rand( strtotime($start), strtotime($end));
+    $rand_date = date("Y-m-d", $sometime);
+    return $rand_date;
 }
 
 //
@@ -130,10 +146,10 @@ $unique = $_GET['u'];
 
 if($counter == NULL) {
     $userlist = generate_email(100, $unique);
-    $petlist = generate_pet(100, $unique);
+    $petlist = rand_tags(100, $unique);
 } else {
     $userlist = generate_email($counter, $unique);
-    $petlist = generate_pet($counter, $unique);
+    $petlist = rand_tags($counter, $unique);
 }
 
 $usercount = count($userlist);
@@ -154,13 +170,19 @@ if($unique == 1) {
     echo "Combined total is always the smallest number. <BR /><BR />";
 }
 
-// Spit out list
-reset($combolist);
-while (list($u,$p) = each($combolist)) {
-    echo $u.": ".$p."<BR />";
+// time to populate
+mysql_select_db($DBname, $linkid);
+reset($combolist);                                                          // just in case the pointer has moved
+while (list($u,$t) = each($combolist)) {
+    $s = rand_species();
+    echo $u.": ".$t."<BR />";
+
+    $sql = "INSERT INTO postings(species,tags,email) VALUES('$s','$t','$u')";
+    if (!mysql_query($sql,$linkid))
+    {
+        die('Error: ' . mysql_error());
+    }
 }
-
-
 
 // date && refreshed
 // random date before X and after Y
@@ -168,9 +190,6 @@ while (list($u,$p) = each($combolist)) {
 // date refreshed should not be the same as dateadded if refreshed = 0
 
 
-mysql_select_db($DBname, $linkid);
-
-//mysql_query("INSERT INTO");
 
 mysql_close($linkid);
 ?>

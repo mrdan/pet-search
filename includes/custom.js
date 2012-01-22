@@ -1,7 +1,7 @@
 //On load page, init the timer which check if the there are anchor changes each 300 ms
 $(document).ready(function() {
     
-    setInterval("checkAnchor()", 30);
+   // setInterval("checkAnchor()", 30);
 });
     
     var currentAnchor = null;
