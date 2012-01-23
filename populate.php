@@ -89,7 +89,7 @@ function rand_species() {
 // returns an array containing $count strings containing a set of pet tags. $unique == 1 means return only unique sets (doesn't compare order of tags)
 function rand_tags($count, $unique) {
 
-    $descrip = Array("long-haired","brown","lazy","playful","short-haired","black","white", "quick", "yellow", 
+    $descrip = Array("male","female","neutered","not-neutered","long-haired","brown","lazy","playful","short-haired","black","white", "quick", "yellow", 
                      "red", "grey", "tabby", "tortoise-shell", "orange", "green-eyed", "yellow-eyed", "nervous", "friendly"
                      );
     

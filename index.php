@@ -36,7 +36,7 @@ mysql_select_db($DBname,$linkid);
 echo "<DIV class='container'>";
     echo "<DIV class='header'>"; echo "Pet Search <IMG src='' />"; echo "</DIV>";
     echo "<DIV class='intro'>";
-        echo "I've lost a <A href='#male'>Male</A> / <A href='#female'>Female</A> dog. We want to be able to click male or female and have the list below change to reflect the choice. The list should initially load with everything. <BR /><BR />";
+        echo "I've lost a <A href='?tags=male'>Male</A> / <A href='?tags=female'>Female</A> <A href='#dog'>dog</A>. We want to be able to click male or female and have the list below change to reflect the choice. The list should initially load with everything. <BR /><BR />";
         display_tagcloud($linkid);
     echo ".</DIV>";
     echo "<DIV class='main' id='main'>";
