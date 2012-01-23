@@ -34,8 +34,7 @@ function display_tagcloud($linkid)
 function display_postings($species, $tags, $offset, $amount, $dbconnection) 
 {
 
-    $sql1 = "SELECT * FROM postings ";
-    $sql_tags = "WHERE tags LIKE '% ".$tags." %' OR tags LIKE '".$tags ."%' OR tags LIKE '% ".$tags."' OR tags = '".$tags."' ";
+    $sql1 = "SELECT * FROM postings ";    
     $sql2 = "ORDER BY daterefreshed DESC LIMIT ".$offset.",".$amount;
 
     if(!$offset)
@@ -44,7 +43,17 @@ function display_postings($species, $tags, $offset, $amount, $dbconnection)
     if(!$tags)
         $sql = $sql1.$sql2;
     else
-        $sql = $sql1.$sql_tags.$sql2;
+    {
+        $tags_array = explode(" ", $tags);
+        $sql_tags1 = "WHERE ";
+        for ($i=0; $i < count($tags_array); $i++) { 
+            $sql_tags2 = "(tags LIKE '% ".$tags_array[$i]." %' OR tags LIKE '".$tags_array[$i] ." %' OR tags LIKE '% ".$tags_array[$i]."' OR tags = '".$tags_array[$i]."') ";
+            if($i < (count($tags_array) - 1))
+                $sql_tags2 = $sql_tags2."AND ";
+            $sql_tags1 = $sql_tags1.$sql_tags2;
+        }
+        $sql = $sql1.$sql_tags1.$sql2;
+    }
 
     $result = mysql_query($sql,$dbconnection);
     if (!$result)
