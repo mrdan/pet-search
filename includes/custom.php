@@ -12,10 +12,9 @@ function array_unique_compact($a)
 }
 
 // print all tags from postings table to the page
-function output_all_tags($DBname,$linkid) 
+function display_tagcloud($linkid) 
 {
-    mysql_select_db($DBname,$linkid);
-    $result = mysql_query("SELECT * FROM postings");
+    $result = mysql_query("SELECT tags FROM postings");
     
     $tags = array();
 
@@ -26,15 +25,27 @@ function output_all_tags($DBname,$linkid)
     $tags = array_unique_compact($tags);
 
     for($i=0;$i<count($tags);$i++) {
-        echo $tags[$i];
-        if($i<count($tags)-1) echo ",\n";
+        echo "<A href='?tags=".$tags[$i]."'>".$tags[$i]."</A> ";
     }
 }
 
-// print $offset postings starting from $start using the mysql connection $dbconnection
-function display_postings($offset, $amount, $dbconnection) 
+// print $offset postings starting from $start using the mysql connection $dbconnection, filtering by $species and $tags if needed
+// returns the next offset based on $offset and $amount
+function display_postings($species, $tags, $offset, $amount, $dbconnection) 
 {
-    $sql = "SELECT * FROM postings ORDER BY daterefreshed DESC LIMIT ".$offset.",".$amount;
+
+    $sql1 = "SELECT * FROM postings ";
+    $sql_tags = "WHERE tags LIKE '% ".$tags." %' OR tags LIKE '".$tags ."%' OR tags LIKE '% ".$tags."' OR tags = '".$tags."' ";
+    $sql2 = "ORDER BY daterefreshed DESC LIMIT ".$offset.",".$amount;
+
+    if(!$offset)
+        $offset = 0;
+
+    if(!$tags)
+        $sql = $sql1.$sql2;
+    else
+        $sql = $sql1.$sql_tags.$sql2;
+
     $result = mysql_query($sql,$dbconnection);
     if (!$result)
         die('Error in display_postings: ' . mysql_error());
@@ -47,5 +58,6 @@ function display_postings($offset, $amount, $dbconnection)
         echo "</DIV>";
     }
 
+    return $offset + $amount;
 }
 ?>

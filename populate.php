@@ -111,14 +111,15 @@ function rand_tags($count, $unique) {
         for($x=0;$x < count($pet_descrip_keys);$x++) {
             $pet_descrip[$x] = $descrip[$pet_descrip_keys[$x]];
         }
+        sort($pet_descrip);
         $descrip_string = implode(" ", $pet_descrip);
         $petlist[$i] = $descrip_string;
     }
     
     if($unique == 1)
-        return array_unique_compact($petlist);
-    else
-        return $petlist;
+        array_unique_compact($petlist);
+
+    return $petlist;
 }
 
 // give us a random date string betwen $start and $end in the mySQL format YYYY-MM-DD
