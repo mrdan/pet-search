@@ -14,18 +14,37 @@ function array_unique_compact($a)
 // print all tags from postings table to the page
 function display_tagcloud($linkid) 
 {
-    $result = mysql_query("SELECT tags FROM postings");
-    
-    $tags = array();
+    //if the url is ?tags=+black then it won't recoginise the tag as it'll be "+black" not "black"
 
+    // add existing url tags to the links
+    if(isset($_GET['tags'])) {
+        $url_tags = $_GET['tags'];
+        $url_tags = str_replace(" ", "+", $url_tags);
+        $url_tags = $url_tags."+";
+    }
+    else
+        $url_tags = "";
+
+    $result = mysql_query("SELECT tags FROM postings");
+    $tags = array();
     while($row = mysql_fetch_array($result)) {
         $tags = array_merge($tags, explode(" ", $row['tags']));
     }
 
     $tags = array_unique_compact($tags);
 
-    for($i=0;$i<count($tags);$i++) {
-        echo "<A href='?tags=".$tags[$i]."'>".$tags[$i]."</A> ";
+    for($i=0;$i<count($tags);$i++) 
+    {
+        if(strpos($url_tags, $tags[$i]) !== FALSE)                                                                          //tag already in url
+        {
+            $url_tags_clean = preg_replace("/(^".$tags[$i]."\+|\+".$tags[$i]."$|".$tags[$i]."\+)/", "", $url_tags);         //remove it from url tags list
+            if($url_tags_clean == "")
+                echo "<A href='?'>".$tags[$i]."</A> ";                                                                      //no more tags so remove "tags" param
+            else
+                echo "<A href='?tags=".substr($url_tags_clean,0,-1)."'>".$tags[$i]."</A> ";                                 //print a url without the tag and remove the uneeded "+"
+        }
+        else
+            echo "<A href='?tags=".$url_tags.$tags[$i]."'>".$tags[$i]."</A> ";
     }
 }
 
@@ -39,7 +58,6 @@ function display_postings($species, $tags, $offset, $amount, $dbconnection)
 
     if(!$offset)
         $offset = 0;
-
     if(!$tags)
         $sql = $sql1.$sql2;
     else
