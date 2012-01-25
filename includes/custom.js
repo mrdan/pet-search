@@ -13,11 +13,13 @@ $(document).ready(function() {
 
 
 function tagSelect() {
-    $(this).addClass("hilite");    
+    $(this).addClass("hilite");
+    //need to add addition of tag to anchor
 }
 
 function tagDeselect() {
 	$(this).removeClass("hilite");
+	//need to add removal of tag from anchor
 }
 
 
@@ -43,6 +45,10 @@ $(function(){
     //
     // on hash change we want to:
     	//call filter.php with the new taglist and repopulate the postings
+    	query = "tags=" + hash.replace( /^#/, '' );
+    	$.get("filter.php",query,function(data) {
+    		$("#main").html(data);
+    	});
     		//need to parse the taglist from the anchor
     		//pass it to filter.php
     		//display results
