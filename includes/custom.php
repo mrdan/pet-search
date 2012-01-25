@@ -12,7 +12,7 @@ function array_unique_compact($a)
 }
 
 // print all tags from postings table to the page
-function display_tagcloud($linkid) 
+function display_tagcloud_php($linkid) 
 {
     //TODO: if the url is ?tags=+black then it won't recoginise the tag as it'll be "+black" not "black"
 
@@ -46,6 +46,21 @@ function display_tagcloud($linkid)
         else
             echo "<A href='?tags=".$url_tags.$tags[$i]."'>".$tags[$i]."</A> ";
     }
+}
+
+function display_tagcloud_js($linkid) {
+    $result = mysql_query("SELECT tags FROM postings");
+    $tags = array();
+    while($row = mysql_fetch_array($result)) {
+        $tags = array_merge($tags, explode(" ", $row['tags']));
+    }
+
+    $tags = array_unique_compact($tags);
+
+    for($i=0;$i<count($tags);$i++) {
+        echo "<A class='tag' href='#".$tags[$i]."'>".$tags[$i]."</A> ";
+    }
+    
 }
 
 // print $offset postings starting from $start using the mysql connection $dbconnection, filtering by $species and $tags if needed
