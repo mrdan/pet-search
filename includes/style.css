@@ -11,12 +11,13 @@ a:hover {
 	color: #F0A830;
 }
 
-span.tag {
+a.tag {
 	cursor: pointer;
 	text-decoration: underline;
+	color:black;
 }
 
-span.tag:hover {
+a.tag:hover {
 	background-color: cyan;
 }
 
