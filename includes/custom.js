@@ -45,13 +45,19 @@ $(function(){
     //
     // on hash change we want to:
     	//call filter.php with the new taglist and repopulate the postings
-    	query = "tags=" + hash.replace( /^#/, '' );
-    	$.get("filter.php",query,function(data) {
-    		$("#main").html(data);
-    	});
     		//need to parse the taglist from the anchor
-    		//pass it to filter.php
+    		//var matchtags = window.location.href.match(/^[^#]+#([a-z,-]+)\/([a-z,-]+)/);
+    		var matchtags = window.location.href.match(/^[^#]+#([a-z,-]+(?:\/[a-z,-]+)*)/);
+    		console.log(matchtags);
+
+    		//pass it to filter.php, we split by / so we need to change them to + for php's sake
+    		query = "tags=" + matchtags[1].replace(/\//g, '+');
+    		console.log(query);
     		//display results
+    		$.get("filter.php",query,function(data) {
+    			$("#main").html(data);
+    		});
+
     	//rewrite the urls on the existing tag links so they include the new addition to the anchor and so the selected ones are "hilite"d
     	$('.tag').each(function(){
     		var that = $(this);
