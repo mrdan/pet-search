@@ -11,10 +11,12 @@ a:hover {
 	color: #F0A830;
 }
 
-#loading {
-    text-align: center;
-    visibility: hidden;
-    background-color: red;
+span.tag {
+	cursor: pointer;
+}
+
+.hilite {
+	background-color: yellow;
 }
 
 div.container {

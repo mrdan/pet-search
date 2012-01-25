@@ -14,7 +14,7 @@ function array_unique_compact($a)
 // print all tags from postings table to the page
 function display_tagcloud($linkid) 
 {
-    //if the url is ?tags=+black then it won't recoginise the tag as it'll be "+black" not "black"
+    //TODO: if the url is ?tags=+black then it won't recoginise the tag as it'll be "+black" not "black"
 
     // add existing url tags to the links
     if(isset($_GET['tags'])) {
@@ -79,7 +79,7 @@ function display_postings($species, $tags, $offset, $amount, $dbconnection)
     while($row = mysql_fetch_array($result)) 
     {
         echo "<DIV class='posting'>";
-            echo "<DIV class='photo'><IMG src='' /></DIV>";
+            echo "<DIV class='photo'><IMG /></DIV>";
             echo "<P><A href=''>".$row['email']."</A>, ".$row['daterefreshed'].", ".$row['refreshed']."</P>";
             echo "<P>".$row['species'].": ".$row['tags']."</P>";
         echo "</DIV>";

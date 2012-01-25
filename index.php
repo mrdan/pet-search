@@ -1,6 +1,7 @@
 <HTML>
 <HEAD><TITLE>Pet Search Test</TITLE>
-<LINK rel="stylesheet" href="includes/style.css" />
+<meta http-equiv="content-script-type" content="text/javascript">
+<LINK type="text/css" rel="stylesheet" href="includes/style.css" />
 <SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
 <SCRIPT type="text/javascript" src="includes/custom.js"></SCRIPT>
 </HEAD>
@@ -34,19 +35,21 @@ mysql_select_db($DBname,$linkid);
 //
 // Begin site
 echo "<DIV class='container'>";
-    echo "<DIV class='header'>"; echo "Pet Search <IMG src='' />"; echo "</DIV>";
+    echo "<DIV class='header'>"; echo "Pet Search <IMG>"; echo "</DIV>";
     echo "<DIV class='intro'>";
-        echo "I've lost a <A href='?tags=male'>Male</A> / <A href='?tags=female'>Female</A> <A href='#dog'>dog</A>. We want to be able to click male or female and have the list below change to reflect the choice. The list should initially load with everything. <BR /><BR />";
+        echo "I've (lost / found) a (<span class='tag'>male</span> / <SPAN class='tag'>female</SPAN>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon). We want to be able to click male or female and have the list below change to reflect the choice. The list should initially load with everything. <BR /><BR />";
         display_tagcloud($linkid);
     echo ".</DIV>";
     echo "<DIV class='main' id='main'>";
-    	$offset = display_postings(0, $tags, $offset, 25, $linkid);
+    	//$offset = display_postings(0, $tags, $offset, 25, $linkid);
+    	$offset = 25;
     echo "</DIV>";
-    echo "<DIV class='footer'><A href='?p=$offset'>Next 25</A></DIV>";
+    echo "<DIV class='footer'><A href='?p=$offset'>Next 25</A></DIV>";				//TODO: stop this from losing the tags
 echo "</DIV>";
 
 // close connection
 mysql_close($linkid);
 
 ?>
+
 </BODY></HTML>
