@@ -19,15 +19,20 @@ function tagClick() {
     var tagexistsalready = re_this.test(window.location.hash);
 
 	if(window.location.hash) {
-    	window.location.hash = window.location.hash + "/" + $(this).text();				//add this to it as #existing/this
+		if(tagexistsalready) {
+			//remove the tag from window.location.hash
+			var ourhash = window.location.hash;
+			var reg_pattern = '([\/]' + $(this).text() + ')|(' + $(this).text() + '[\/]?)';
+			var regexr = new RegExp(reg_pattern,'g');
+			console.log(reg_pattern);
+			window.location.hash = ourhash.replace(regexr, "");
+			console.log(ourhash);
+		} else
+    		window.location.hash = window.location.hash + "/" + $(this).text();				//add this to it as #existing/this
 	} else {
     	window.location.hash = window.location.hash + $(this).text();
     }
     //hashchange should notice and update then
-    console.log($(this).text());
-    console.log(window.location.href);
-    console.log(tagexistsalready);
-
     return false;																		//this stops the rest of the click event happening (i.e. the url getting set to just the anchor clicked)
 }
 
@@ -68,9 +73,9 @@ $(function(){
     			query = "?";
     			console.log(query);
     			//display results
-    			//$.get("filter.php",query,function(data) {
-    			//	$("#main").html(data);
-    			//});
+    			$.get("filter.php",query,function(data) {
+    				$("#main").html(data);
+    			});
     		};
     			
     		
