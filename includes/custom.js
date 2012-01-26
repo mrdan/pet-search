@@ -2,9 +2,9 @@
 // on load page...
 $(document).ready(function() {
     
-   // setInterval("checkAnchor()", 30);
    $('a.tag').click(tagClick);
 
+   //get the default postings (i.e. all of them)
    query = "";
    $.get("filter.php",query, function(data) {
             $("#main").html(data);
@@ -15,24 +15,22 @@ $(document).ready(function() {
 function tagClick() {
     $(this).addClass("hilite");
 
-    var re_this = new RegExp($(this).text());											//TODO: need to make the regex more specific to avoid false-positive substring matches (i.e. neutered being matched in non-neutered)
+    var reg_pattern = '([\/]' + $(this).text() + ')|((?:^#)' + $(this).text() + '[\/]?)';
+    var re_this = new RegExp(reg_pattern,'g');
     var tagexistsalready = re_this.test(window.location.hash);
 
 	if(window.location.hash) {
 		if(tagexistsalready) {
 			//remove the tag from window.location.hash
 			var ourhash = window.location.hash;
-			var reg_pattern = '([\/]' + $(this).text() + ')|(' + $(this).text() + '[\/]?)';
-			var regexr = new RegExp(reg_pattern,'g');
-			console.log(reg_pattern);
-			window.location.hash = ourhash.replace(regexr, "");
-			console.log(ourhash);
+			window.location.hash = ourhash.replace(re_this, "");
 		} else
     		window.location.hash = window.location.hash + "/" + $(this).text();				//add this to it as #existing/this
 	} else {
     	window.location.hash = window.location.hash + $(this).text();
     }
-    //hashchange should notice and update then
+
+    //hashchange should notice and update now
     return false;																		//this stops the rest of the click event happening (i.e. the url getting set to just the anchor clicked)
 }
 
