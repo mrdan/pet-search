@@ -3,26 +3,33 @@
 $(document).ready(function() {
     
    // setInterval("checkAnchor()", 30);
-   //$('a.tag').toggle(tagSelect,tagDeselect);
+   $('a.tag').click(tagClick);
 
-   query = "?";
+   query = "";
    $.get("filter.php",query, function(data) {
             $("#main").html(data);
    });
 });
 
 
-function tagSelect() {
+function tagClick() {
     $(this).addClass("hilite");
-    //need to add addition of tag to anchor
+
+    var re_this = new RegExp($(this).text());											//TODO: need to make the regex more specific to avoid false-positive substring matches (i.e. neutered being matched in non-neutered)
+    var tagexistsalready = re_this.test(window.location.hash);
+
+	if(window.location.hash) {
+    	window.location.hash = window.location.hash + "/" + $(this).text();				//add this to it as #existing/this
+	} else {
+    	window.location.hash = window.location.hash + $(this).text();
+    }
+    //hashchange should notice and update then
+    console.log($(this).text());
+    console.log(window.location.href);
+    console.log(tagexistsalready);
+
+    return false;																		//this stops the rest of the click event happening (i.e. the url getting set to just the anchor clicked)
 }
-
-function tagDeselect() {
-	$(this).removeClass("hilite");
-	//need to add removal of tag from anchor
-}
-
-
 
 $(function(){
   
@@ -46,63 +53,39 @@ $(function(){
     // on hash change we want to:
     	//call filter.php with the new taglist and repopulate the postings
     		//need to parse the taglist from the anchor
-    		//var matchtags = window.location.href.match(/^[^#]+#([a-z,-]+)\/([a-z,-]+)/);
-    		var matchtags = window.location.href.match(/^[^#]+#([a-z,-]+(?:\/[a-z,-]+)*)/);
-    		console.log(matchtags);
-
-    		//pass it to filter.php, we split by / so we need to change them to + for php's sake
-    		query = "tags=" + matchtags[1].replace(/\//g, '+');
-    		console.log(query);
-    		//display results
-    		$.get("filter.php",query,function(data) {
-    			$("#main").html(data);
-    		});
+    		var matchtags = window.location.href.match(/^[^#]+#([a-z,-]+(?:\/[a-z,-]+)*)/);	//TODO: change this to use window.location.hash
+    		if (matchtags != null) {
+    			console.log(matchtags);
+    			//pass it to filter.php, we split by / so we need to change them to + for php's sake
+    			query = "tags=" + matchtags[1].replace(/\//g, '+');
+    			console.log(query);
+    			//display results
+    			$.get("filter.php",query,function(data) {
+    				$("#main").html(data);
+    			});
+    		} else {
+    			//no tags so our query is nothing! take the rest of the day off!
+    			query = "?";
+    			console.log(query);
+    			//display results
+    			//$.get("filter.php",query,function(data) {
+    			//	$("#main").html(data);
+    			//});
+    		};
+    			
+    		
 
     	//rewrite the urls on the existing tag links so they include the new addition to the anchor and so the selected ones are "hilite"d
     	$('.tag').each(function(){
     		var that = $(this);
       		that[ that.attr( 'href' ) === hash ? 'addClass' : 'removeClass' ]( 'hilite' );
-    	})
+    	});
 
     //
-  })
+  });
   
   // Since the event is only triggered when the hash changes, we need to trigger
   // the event now, to handle the hash the page may have loaded with.
   $(window).hashchange();
   
 });
-
-
-
-//
-
-
-
-
-var currentAnchor = null;
-
-function checkAnchor() {
-	//Check if it has changes
-	if(currentAnchor != document.location.hash) {
-		currentAnchor = document.location.hash;
-		//if there is not anchor, the loads the default section
-		if(!currentAnchor)
-			query = "g=1";
-		else
-		{
-			//Creates the  string callback. This converts the url URL/#main&amp;amp;id=2 in URL/?section=main&amp;amp;id=2
-			var splits = currentAnchor.substring(1).split('&amp;amp;');
-			//Get the section
-			var section = splits[0];
-			delete splits[0];
-			//Create the params string
-			var params = splits.join('&amp;amp;');
-			var query = "g=" + section + params;
-		}
-		//Send the petition
-		$.get("filter.php",query, function(data) {
-			$("#main").html(data);
-		});
-	}
-}
