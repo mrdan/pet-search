@@ -10,17 +10,6 @@
 <?php @ require_once ('includes/custom.php'); ?>
 <?php
 
-// check our gets
-if (isset($_GET['p']))
-	$offset = $_GET['p'];
-else
-	$offset = 0;
-
-if(isset($_GET['tags']))
-	$tags = $_GET['tags'];
-else
-	$tags = "";
-
 // db setup
 $DBhost = "127.0.0.1";
 $DBuser = "pet_user";

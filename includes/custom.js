@@ -11,7 +11,7 @@ $(document).ready(function() {
    });
 });
 
-
+//rewrites the url properly when a tag is clicked
 function tagClick() {
 
     var reg_pattern = '([\/]' + $(this).text() + ')|((?:^#)' + $(this).text() + '[\/]?)';
@@ -29,8 +29,7 @@ function tagClick() {
     	window.location.hash = window.location.hash + $(this).text();
     }
 
-    //hashchange should notice and update now
-    return false;																		//this stops the rest of the click event happening (i.e. the url getting set to just the anchor clicked)
+    return false;																			//this stops the rest of the click event happening (i.e. the url ressetting to the actual href (just the one tag) of the link)
 }
 
 $(function(){
@@ -40,23 +39,21 @@ $(function(){
 		var hash = location.hash;
     
     	//need to parse the taglist from the anchor
-    	var matchtags = window.location.href.match(/^[^#]+#([a-z,-]+(?:\/[a-z,-]+)*)/);	//TODO: change this to use window.location.hash
+    	var matchtags = window.location.href.match(/^[^#]+#([a-z,-]+(?:\/[a-z,-]+)*)/);
     	if (matchtags != null) {
-    		//pass it to filter.php, we split by / so we need to change them to + for php's sake
-    		query = "tags=" + matchtags[1].replace(/\//g, '+');
+    		query = "tags=" + matchtags[1].replace(/\//g, '+');								//we split tags by / so we need to change them to + for php's sake
     		$.get("filter.php",query,function(data) {
     			$("#main").html(data);
     		});
     	} else {
     		//no tags so our query is nothing! take the rest of the day off!
-    		query = "?";
+    		query = "";
     		$.get("filter.php",query,function(data) {
     			$("#main").html(data);
     		});
     	}
 
-    	//TODO: we need to colour all the right tags
-    	//change a.tag's so the selected ones are "hilite"d
+    	//change "a" elements of class ".tag" so the selected ones are "hilite"d
        	$('a.tag').each(function(){
     		var that = $(this);
 			var reg_pattern = '([\/]' + that.text() + ')|((?:^#)' + that.text() + '[\/]?)';
