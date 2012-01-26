@@ -24,22 +24,20 @@ mysql_select_db($DBname,$linkid);
 
 //
 // Begin site
-echo "<DIV class='container'>";
-    echo "<DIV class='header'>"; echo "Pet Search <IMG>"; echo "</DIV>";
-    echo "<DIV class='intro'>";
-        echo "I've (lost / found) a (<A class='tag' href='#male'>male</A> / <A class='tag' href='#female'>female</A>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon). We want to be able to click male or female and have the list below change to reflect the choice. The list should initially load with everything. <BR /><BR />";
-        display_tagcloud_js($linkid);
-    echo ".</DIV>";
-    echo "<DIV class='main' id='main'>";
-    	//$offset = display_postings(0, $tags, $offset, 25, $linkid);
-    	$offset = 25;
-    echo "</DIV>";
-    echo "<DIV class='footer'><A href='?p=$offset'>Next 25</A></DIV>";				//TODO: stop this from losing the tags
-echo "</DIV>";
+?>
+<DIV class='container'>
+<DIV class='header'>Pet Search <IMG></DIV>
+<DIV class='intro'>
+I've (lost / found) a (<A class='tag' href='#male'>male</A> / <A class='tag' href='#female'>female</A>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon). We want to be able to click male or female and have the list below change to reflect the choice. The list should initially load with everything. <BR /><BR />
+<?php display_tagcloud_js($linkid); ?>
+</DIV>
+<DIV class='main' id='main'></DIV>
+<DIV class='footer'><A href='?p=$offset'>Next 25</A></DIV>
+</DIV>
 
+<?php
 // close connection
 mysql_close($linkid);
 
 ?>
-
 </BODY></HTML>
