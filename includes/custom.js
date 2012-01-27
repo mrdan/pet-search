@@ -14,7 +14,8 @@ $(document).ready(function() {
 //rewrites the url properly when a tag is clicked
 function tagClick() {
 
-    var reg_pattern = '([\/]' + $(this).text() + ')|((?:^#)' + $(this).text() + '[\/]?)';
+    //var reg_pattern = '([\/]' + $(this).text() + ')|((?:^#)' + $(this).text() + '[\/]?)';
+    var reg_pattern = '((?:^#)' + $(this).text() + '$)|((?:^#)' + $(this).text() + '\/)|([\/]' + $(this).text() + '((?=\/)|$))';
     var re_this = new RegExp(reg_pattern,'g');
     var tagexistsalready = re_this.test(window.location.hash);
 
@@ -56,7 +57,7 @@ $(function(){
     	//change "a" elements of class ".tag" so the selected ones are "hilite"d
        	$('a.tag').each(function(){
     		var that = $(this);
-			var reg_pattern = '([\/]' + that.text() + ')|((?:^#)' + that.text() + '[\/]?)';
+      var reg_pattern = '((?:^#)' + $(this).text() + '$)|((?:^#)' + $(this).text() + '\/)|([\/]' + $(this).text() + '((?=\/)|$))';
     		var re_this = new RegExp(reg_pattern,'g');
     		var taginurl = re_this.test(window.location.hash);
 
