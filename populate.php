@@ -129,6 +129,18 @@ function rand_date($start, $end) {
     return $rand_date;
 }
 
+function populate_cat($linkid) {
+    $descrip = Array("male","female","neutered","not-neutered","long-haired","brown","lazy","playful","short-haired","black","white", "quick", "yellow", 
+                     "red", "grey", "tabby", "tortoise-shell", "orange", "green-eyed", "yellow-eyed", "nervous", "friendly"
+                     );
+
+    for ($i=0; $i < count($descrip); $i++) { 
+        $sql = "INSERT INTO tags(tag) VALUES('$descrip[$i]')";
+        if (!mysql_query($sql,$linkid))
+            echo 'Error: ' . mysql_error().'<br />';
+    }
+}
+
 //
 // Main
 //
@@ -184,13 +196,7 @@ while (list($u,$t) = each($combolist)) {
         die('Error: ' . mysql_error());
     }
 }
-
-// date && refreshed
-// random date before X and after Y
-// random refreshed number less than 10
-// date refreshed should not be the same as dateadded if refreshed = 0
-
-
+populate_cat($linkid);
 
 mysql_close($linkid);
 ?>
