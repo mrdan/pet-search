@@ -55,7 +55,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
 <DIV class='lightbox'>
 	<p>Click "Cancel" to close</p>
     <DIV class='lb_content' id="recat">
-    	To which category to you want to assign the tags <SPAN id="tag_list">none</SPAN>?
+    	To which category to you want to assign the tags: <SPAN id="tag_list">none</SPAN>?
 		<FORM id="tag_assign" action="admin.php" method="post">
       		<SELECT name="chosen_category">
       			<OPTION value="uncategorised">Uncategorised</OPTION>

@@ -114,7 +114,7 @@ div.lightbox p {
 
 div.lightbox > div.lb_content {
 	max-width: 350px;
-	max-height: 150px;
+	max-height: 250px;
 	margin:0 auto;
 	background-color: white;
 	box-shadow:0 0 25px #111;

@@ -1,8 +1,9 @@
 $(document).ready(function() {
    $('.lightbox_trigger').click(lightbox);
-   $('span.tag').click(tagClick);
+   $('span.tag').toggle(selectTag, deselectTag);
 });
 
+//display the correct lightbox depending on the button clicked
 function lightbox() { 
 	var $button = $(this).attr('name');
 	//fill our lightbox with the text of each "hilite"d tag
@@ -10,7 +11,10 @@ function lightbox() {
 	$(".hilite").each(function() {
 		$selected.push($(this).text());
 	});
-	$("#tag_list").html('"' + $selected.join('", "') + '"');
+	if ($selected.length > 0)
+		$("#tag_list").html('"' + $selected.join('", "') + '"');
+	else
+		$("#tag_list").html('no tags selected!');
 	$("#chosen_tags").val($selected.join(' '));
 
 	$('.lightbox').css("visibility", "visible");
@@ -30,8 +34,10 @@ function lightbox() {
 	});
 }
 
-//rewrites the url properly when a tag is clicked
-function tagClick() {
+function selectTag() {
 	$(this).addClass("hilite");
-    return false;																			//this stops the rest of the click event happening (i.e. the url ressetting to the actual href (just the one tag) of the link)
+}
+
+function deselectTag() {
+	$(this).removeClass("hilite");
 }
