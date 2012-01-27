@@ -1,10 +1,9 @@
 body {
 	background-color: #F5F5F5;
-/*	background-color: #FCEBB6;*/
 }
 
 a {
-		text-decoration: none;
+		text-decoration: underline;
 }
 
 a:hover {
@@ -12,8 +11,6 @@ a:hover {
 }
 
 a.tag {
-	cursor: pointer;
-	text-decoration: underline;
 	color:black;
 }
 
@@ -85,22 +82,36 @@ div.posting > div.photo {
     margin-right: 10px;
 }
 
-// old
-	.preamble {
-		border-top: 10px solid #5E412F;
-		font-size: 50px;
-		padding-bottom: 5px;
- 		padding-top: 5px;
-	}
-	
-	.highlight {
-		color: #F07818 ;
-		font-weight: bold;
-	}
+div.category {
+}
 
-	.blurb {
-		border-top: 10px solid #5E412F;
-  		border-bottom: 10px solid #5E412F;
-  		padding-bottom: 5px;
- 		padding-top: 5px;
-	}
+div.category > div#title{
+	font-weight: bold;
+}
+
+div.category > div#tags{
+}
+
+div.lightbox {
+	visibility: hidden;
+	position:fixed; /* keeps the lightbox window in the current viewport */
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,.7);
+    text-align:center;
+}
+div.lightbox p {
+    text-align:right;
+    color:#fff;
+    margin-right:20px;
+    font-size:12px;
+}
+
+div.lightbox img {
+    box-shadow:0 0 25px #111;
+    -webkit-box-shadow:0 0 25px #111;
+    -moz-box-shadow:0 0 25px #111;
+    max-width:940px;
+}

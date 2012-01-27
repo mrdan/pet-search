@@ -3,6 +3,7 @@
 $(document).ready(function() {
     
    $('a.tag').click(tagClick);
+   $('.lightbox_trigger').click(lightbox);
 
    //get the default postings (i.e. all of them)
    query = "";
@@ -14,9 +15,9 @@ $(document).ready(function() {
 //rewrites the url properly when a tag is clicked
 function tagClick() {
 
-    var reg_pattern = '((?:^#)' + $(this).text() + '$)|((?:^#)' + $(this).text() + '\/)|([\/]' + $(this).text() + '((?=\/)|$))';
-    var re_this = new RegExp(reg_pattern,'g');
-    var tagexistsalready = re_this.test(window.location.hash);
+  var reg_pattern = '((?:^#)' + $(this).text() + '$)|((?:^#)' + $(this).text() + '\/)|([\/]' + $(this).text() + '((?=\/)|$))';
+  var re_this = new RegExp(reg_pattern,'g');
+  var tagexistsalready = re_this.test(window.location.hash);
 
 	if(window.location.hash) {
 		if(tagexistsalready) {
