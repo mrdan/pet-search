@@ -104,6 +104,7 @@ div.lightbox {
     background: rgba(0,0,0,.7);
     text-align:center;
 }
+
 div.lightbox p {
     text-align:right;
     color:#fff;
@@ -111,12 +112,25 @@ div.lightbox p {
     font-size:12px;
 }
 
-div.lightbox > div#lb_content {
-	max-width: 150px;
+div.lightbox > div.lb_content {
+	max-width: 350px;
 	max-height: 150px;
 	margin:0 auto;
 	background-color: white;
 	box-shadow:0 0 25px #111;
     -webkit-box-shadow:0 0 25px #111;
     -moz-box-shadow:0 0 25px #111;
+}
+
+div.lb_content#recat {
+	visibility: hidden;
+}
+div.lb_content#approve {
+	visibility: hidden;
+}
+div.lb_content#delete {
+	visibility: hidden;
+}
+div.lb_content#error {
+	visibility: hidden;
 }
