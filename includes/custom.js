@@ -3,7 +3,6 @@
 $(document).ready(function() {
     
    $('a.tag').click(tagClick);
-   $('.lightbox_trigger').click(lightbox);
 
    //get the default postings (i.e. all of them)
    query = "";

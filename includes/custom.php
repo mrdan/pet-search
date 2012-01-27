@@ -62,7 +62,7 @@ function display_tag_category($category,$linkid) {
     }
     
     while($row = mysql_fetch_array($result))
-        echo $row['tag']." ";
+        echo "<SPAN class='tag'>".$row['tag']."</SPAN> ";
 }
 
 function display_tagcloud_js($linkid) {
@@ -77,7 +77,6 @@ function display_tagcloud_js($linkid) {
     for($i=0;$i<count($tags);$i++) {
         echo "<A class='tag' href='#".$tags[$i]."'>".$tags[$i]."</A> ";
     }
-    
 }
 
 // print $offset postings starting from $start using the mysql connection $dbconnection, filtering by $species and $tags if needed
