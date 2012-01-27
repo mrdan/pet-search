@@ -48,6 +48,23 @@ function display_tagcloud_php($linkid)
     }
 }
 
+function display_tag_category($category,$linkid) {
+
+    if ($category == NULL | $category == '')
+        $sql = "SELECT tag FROM tags WHERE category IS NULL";
+    else
+        $sql = "SELECT tag FROM tags WHERE category='$category'";
+
+    $result = mysql_query($sql);
+    if(mysql_num_rows($result)==0){
+        echo "No tags found for category ";
+        return;
+    }
+    
+    while($row = mysql_fetch_array($result))
+        echo $row['tag']." ";
+}
+
 function display_tagcloud_js($linkid) {
     $result = mysql_query("SELECT tags FROM postings");
     $tags = array();
