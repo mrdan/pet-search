@@ -122,6 +122,9 @@ div.lightbox > div.lb_content {
     -moz-box-shadow:0 0 25px #111;
 }
 
+div.lb_content#add {
+	visibility: hidden;
+}
 div.lb_content#recat {
 	visibility: hidden;
 }

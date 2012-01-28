@@ -54,6 +54,9 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
 
 <DIV class='lightbox'>
 	<p>Click "Cancel" to close</p>
+	<DIV class='lb_content' id="add">
+    	<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>
+    </DIV>
     <DIV class='lb_content' id="recat">
     	To which category to you want to assign the tags: <SPAN id="tag_list">none</SPAN>?
 		<FORM id="tag_assign" action="admin.php" method="post">
@@ -90,6 +93,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
 <DIV class='category'><DIV id="title">Location</DIV><?php display_tag_category("location",$linkid); ?></DIV>
 <DIV class='category'><DIV id="title">Uncategorised</DIV><?php display_tag_category(NULL,$linkid); ?></DIV>
 <BR />
+<BUTTON type="button" class="lightbox_trigger" name="add">Add</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="recat">Re-categorise</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="approve">Approve</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="delete">Delete</BUTTON>

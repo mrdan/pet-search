@@ -18,7 +18,9 @@ function lightbox() {
 	$("#chosen_tags").val($selected.join(' '));
 
 	$('.lightbox').css("visibility", "visible");
-	if($button == 'recat')
+	if($button == 'add')
+		$('.lb_content#add').css("visibility", "visible");
+	else if($button == 'recat')
 		$('.lb_content#recat').css("visibility", "visible");
 	else if($button == 'approve')
 		$('.lb_content#approve').css("visibility", "visible");
