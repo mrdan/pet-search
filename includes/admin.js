@@ -2,8 +2,7 @@ $(document).ready(function() {
    $('.lightbox_trigger').click(lightbox);
    $('span.tag').toggle(selectTag, deselectTag);
 
-   $("input.newText").focus(function(srcc)
-    {
+   $("input.newText").focus(function(srcc) {
         if ($(this).val() == $(this)[0].title)
         {
             $(this).removeClass("newTextActive");
@@ -11,8 +10,7 @@ $(document).ready(function() {
         }
     });
     
-    $("input.newText").blur(function()
-    {
+    $("input.newText").blur(function() {
         if ($(this).val() == "")
         {
             $(this).addClass("newTextActive");

@@ -61,8 +61,13 @@ function display_tag_category($category,$linkid) {
         return;
     }
     
-    while($row = mysql_fetch_array($result))
-        echo "<SPAN class='tag'>".$row['tag']."</SPAN> ";
+    while($row = mysql_fetch_array($result)) {
+        $tag = $row['tag'];
+        $sql_tagcount = "SELECT COUNT(*) FROM postings WHERE (tags LIKE '$tag' OR tags LIKE '%$tag%' OR tags LIKE '%$tag' OR tags LIKE '$tag%')";
+        $result_tagcount = mysql_query($sql_tagcount);
+        $actual_tagcount = mysql_fetch_array($result_tagcount);
+        echo "<SPAN class='tag'>".$row['tag']." </SPAN> <SPAN id='greyed'>($actual_tagcount[0])</SPAN> ";
+    }
 }
 
 function display_tag_pending($linkid) {

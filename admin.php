@@ -2,8 +2,6 @@
 <HEAD><TITLE>Pet Search Test Admin</TITLE>
 <meta http-equiv="content-script-type" content="text/javascript">
 <LINK type="text/css" rel="stylesheet" href="includes/style.css" />
-<SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
-<SCRIPT type="text/javascript" src="includes/admin.js"></SCRIPT>
 </HEAD>
 <BODY>
 <?php @ require_once ('includes/custom.php'); ?>
@@ -83,11 +81,11 @@ if(isset($_POST['newtag']) && $_POST['chosen_category']) {
 		echo 'Error: ' . mysql_error(). '<BR />';
     }
 }
-//check for tag deletion
+//check for tag unapproval
 if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
 	$changed_tags = $_POST["chosen_tags"];
 	//$sql = "DELETE FROM tags WHERE ";
-	$sql = "UPDATE tags SET approved=0 WHERE ";
+	$sql = "UPDATE tags SET approved=0,category=DEFAULT WHERE ";
 	$chosen_tags = explode(" ", $changed_tags);
     if(count($chosen_tags) == 1)
     	$sql = $sql."tag='$chosen_tags[0]'";
@@ -152,7 +150,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
     	</FORM>
     </DIV>
     <DIV class='lb_content' id="delete">
-    	    	Are you sure you want to delete the tags: <SPAN id="tag_list"> none </SPAN>? <B>This cannot be undone</B>.
+    	    	Are you sure you want to unapprove the tags: <SPAN id="tag_list"> none </SPAN>?
     	<FORM id="tag_delete" action="admin.php" method="post">
       		<INPUT type="hidden" id="chosen_tags" name="chosen_tags" value="" />
       		<INPUT type="hidden" name="delete" value="delete" />
@@ -178,10 +176,12 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
 <BUTTON type="button" class="lightbox_trigger" name="add">Add</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="recat">Re-categorise</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="approve">Approve</BUTTON>
-<BUTTON type="button" class="lightbox_trigger" name="delete">Delete</BUTTON>
+<BUTTON type="button" class="lightbox_trigger" name="delete">Unapprove</BUTTON>
 
 <?php
 mysql_close($linkid);
 ?>
+<SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/admin.js"></SCRIPT>
 </BODY>
 </HTML>

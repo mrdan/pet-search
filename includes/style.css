@@ -92,6 +92,10 @@ div.category > span.tag {
 	text-decoration: underline;
 }
 
+div.category > span.tag:hover {
+	background-color: cyan;
+}
+
 div.category > div#title{
 	font-weight: bold;
 }
