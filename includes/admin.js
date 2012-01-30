@@ -1,6 +1,26 @@
 $(document).ready(function() {
    $('.lightbox_trigger').click(lightbox);
    $('span.tag').toggle(selectTag, deselectTag);
+
+   $("input.newText").focus(function(srcc)
+    {
+        if ($(this).val() == $(this)[0].title)
+        {
+            $(this).removeClass("newTextActive");
+            $(this).val("");
+        }
+    });
+    
+    $("input.newText").blur(function()
+    {
+        if ($(this).val() == "")
+        {
+            $(this).addClass("newTextActive");
+            $(this).val($(this)[0].title);
+        }
+    });
+    
+    $("input.newText").blur(); 
 });
 
 //display the correct lightbox depending on the button clicked
@@ -11,11 +31,12 @@ function lightbox() {
 	$(".hilite").each(function() {
 		$selected.push($(this).text());
 	});
+	console.log($selected);
 	if ($selected.length > 0)
-		$("#tag_list").html('"' + $selected.join('", "') + '"');
+		$('span#tag_list').html('"' + $selected.join('", "') + '"');
 	else
-		$("#tag_list").html('no tags selected!');
-	$("#chosen_tags").val($selected.join(' '));
+		$('span#tag_list').html('no tags selected!');
+	$("input#chosen_tags").val($selected.join(' '));
 
 	$('.lightbox').css("visibility", "visible");
 	if($button == 'add')

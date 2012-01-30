@@ -22,6 +22,7 @@ if (!$linkid) {
 mysql_select_db($DBname,$linkid);
 
 //check and process $_POST
+//check for tag reassignment
 if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
 	$changed_tags = $_POST["chosen_tags"];
 	$chosen_category = $_POST["chosen_category"];
@@ -47,6 +48,40 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
 		echo 'Error: ' . mysql_error(). '<BR />';
     }
 }
+//check for tag approval
+if(isset($_POST["chosen_tags"]) && isset($_POST["approval"])) {
+	$changed_tags = $_POST["chosen_tags"];
+	$sql = "UPDATE tags SET approved=1 WHERE ";
+	$chosen_tags = explode(" ", $changed_tags);
+    if(count($chosen_tags) == 1)
+    	$sql = $sql."tag='$chosen_tags[0]'";
+    else {
+    	for ($i=0; $i < count($chosen_tags); $i++) {
+    		if($i == count($chosen_tags) - 1) 
+    			$sql = $sql."tag='$chosen_tags[$i]'";
+    		else
+    			$sql = $sql."tag='$chosen_tags[$i]' OR ";
+    	}
+    }
+
+	if (!mysql_query($sql,$linkid)) {
+		echo 'Error: ' . mysql_error(). '<BR />';
+    }
+}
+//check for tag addition
+if(isset($_POST['newtag']) && $_POST['chosen_category']) {
+	$newtag = $_POST['newtag'];
+	$category = $_POST['chosen_category'];
+
+	if ($category == "uncategorised")
+        $sql = "INSERT INTO tags(tag,approved) VALUES('$newtag',1)";
+    else
+		$sql = "INSERT INTO tags(tag,category,approved) VALUES('$newtag','$category',1)";
+		
+	if (!mysql_query($sql,$linkid)) {
+		echo 'Error: ' . mysql_error(). '<BR />';
+    }
+}
 
 
 //begin HTML
@@ -55,7 +90,19 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
 <DIV class='lightbox'>
 	<p>Click "Cancel" to close</p>
 	<DIV class='lb_content' id="add">
-    	<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>
+		<FORM id="tag_add" action="admin.php" method="post">
+			<INPUT type="text" class="newText" title="Type in your tag, it will be automatically approved..." name="newtag" />
+			<SELECT name="chosen_category">
+      			<OPTION value="uncategorised">Uncategorised</OPTION>
+      			<OPTION value="species">Species</OPTION>
+      			<OPTION value="medical">Medical</OPTION>
+      			<OPTION value="visual">Visual</OPTION>
+      			<OPTION value="personality">Personality</OPTION>
+      			<OPTION value="location">Location</OPTION>
+      		</SELECT>
+			<INPUT type="Submit" name="tag_add_submit" value="Submit" />
+    		<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>
+    	</FORM>
     </DIV>
     <DIV class='lb_content' id="recat">
     	To which category to you want to assign the tags: <SPAN id="tag_list">none</SPAN>?
@@ -74,7 +121,13 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
     	</FORM>
     </DIV>
     <DIV class='lb_content' id="approve">
-    	<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>
+    	Are you sure you want to approve the tags: <SPAN id="tag_list"> none </SPAN>?
+    	<FORM id="tag_approve" action="admin.php" method="post">
+      		<INPUT type="hidden" id="chosen_tags" name="chosen_tags" value="" />
+      		<INPUT type="hidden" name="approval" value="approval" />
+      		<INPUT type="Submit" name="tag_approve_submit" value="Submit" />
+    		<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>
+    	</FORM>
     </DIV>
     <DIV class='lb_content' id="delete">
     	<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>

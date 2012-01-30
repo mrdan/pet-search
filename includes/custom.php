@@ -57,7 +57,7 @@ function display_tag_category($category,$linkid) {
 
     $result = mysql_query($sql,$linkid);
     if(mysql_num_rows($result)==0){
-        echo "No tags found for category ";
+        echo "<SPAN id='greyed'>No tags found for category </SPAN>";
         return;
     }
     
@@ -70,7 +70,7 @@ function display_tag_pending($linkid) {
     $sql = "SELECT tag FROM tags WHERE approved=0";
     $result = mysql_query($sql,$linkid);
     if(mysql_num_rows($result)==0){
-        echo "No tags pending ";
+        echo "<SPAN id='greyed'>No tags pending </SPAN>";
         return;
     }
     while ($row = mysql_fetch_array($result))

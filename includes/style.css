@@ -99,6 +99,10 @@ div.category > div#title{
 div.category > div#tags{
 }
 
+div.category > span#greyed{
+	color: gray;
+}
+
 /* admin.php lightbox */
 div.lightbox {
 	visibility: hidden;
@@ -143,3 +147,6 @@ div.lb_content#delete {
 div.lb_content#error {
 	visibility: hidden;
 }
+
+input.newText { width: 300px; }
+input.newTextActive { color: #a1a1a1; font-style: italic; }
