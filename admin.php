@@ -77,7 +77,27 @@ if(isset($_POST['newtag']) && $_POST['chosen_category']) {
         $sql = "INSERT INTO tags(tag,approved) VALUES('$newtag',1)";
     else
 		$sql = "INSERT INTO tags(tag,category,approved) VALUES('$newtag','$category',1)";
-		
+
+	if (!mysql_query($sql,$linkid)) {
+		echo 'Error: ' . mysql_error(). '<BR />';
+    }
+}
+//check for tag deletion
+if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
+	$changed_tags = $_POST["chosen_tags"];
+	$sql = "DELETE FROM tags WHERE ";
+	$chosen_tags = explode(" ", $changed_tags);
+    if(count($chosen_tags) == 1)
+    	$sql = $sql."tag='$chosen_tags[0]'";
+    else {
+    	for ($i=0; $i < count($chosen_tags); $i++) {
+    		if($i == count($chosen_tags) - 1) 
+    			$sql = $sql."tag='$chosen_tags[$i]'";
+    		else
+    			$sql = $sql."tag='$chosen_tags[$i]' OR ";
+    	}
+    }
+
 	if (!mysql_query($sql,$linkid)) {
 		echo 'Error: ' . mysql_error(). '<BR />';
     }
@@ -130,9 +150,16 @@ if(isset($_POST['newtag']) && $_POST['chosen_category']) {
     	</FORM>
     </DIV>
     <DIV class='lb_content' id="delete">
-    	<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>
+    	    	Are you sure you want to delete the tags: <SPAN id="tag_list"> none </SPAN>? <B>This cannot be undone</B>.
+    	<FORM id="tag_delete" action="admin.php" method="post">
+      		<INPUT type="hidden" id="chosen_tags" name="chosen_tags" value="" />
+      		<INPUT type="hidden" name="delete" value="delete" />
+      		<INPUT type="Submit" name="tag_delete_submit" value="Submit" />
+    		<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>
+    	</FORM>
     </DIV>
     <DIV class='lb_content'  id="error">
+    	You're not supposed to be here
     	<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>
     </DIV>
 </DIV>
