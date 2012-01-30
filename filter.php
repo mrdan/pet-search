@@ -15,15 +15,12 @@ if (!$linkid) {
 mysql_select_db($DBname,$linkid);
 
 // check our gets
-if (isset($_GET['p']))
-	$offset = $_GET['p'];
-else
-	$offset = 0;
+$offset = 0;
 
-if(isset($_GET['tags']))
-	$tags = $_GET['tags'];
+if(isset($_POST['tags']))
+	$tags = $_POST['tags'];
 else
-	$tags = "";
+	$tags = Array();
 
 display_postings($tags, $offset, 25, $linkid);
 

@@ -102,11 +102,10 @@ function display_postings($tags, $offset, $amount, $dbconnection)
         $sql = $sql1.$sql2;
     else
     {
-        $tags_array = explode(" ", $tags);
         $sql_tags1 = "WHERE ";
-        for ($i=0; $i < count($tags_array); $i++) { 
-            $sql_tags2 = "(tags LIKE '% ".$tags_array[$i]." %' OR tags LIKE '".$tags_array[$i] ." %' OR tags LIKE '% ".$tags_array[$i]."' OR tags = '".$tags_array[$i]."') ";
-            if($i < (count($tags_array) - 1))
+        for ($i=0; $i < count($tags); $i++) { 
+            $sql_tags2 = "(tags LIKE '% ".$tags[$i]." %' OR tags LIKE '".$tags[$i] ." %' OR tags LIKE '% ".$tags[$i]."' OR tags = '".$tags[$i]."') ";
+            if($i < (count($tags) - 1))
                 $sql_tags2 = $sql_tags2."AND ";
             $sql_tags1 = $sql_tags1.$sql_tags2;
         }
