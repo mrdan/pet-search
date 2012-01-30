@@ -85,7 +85,7 @@ function display_tagcloud_js($linkid) {
 
 // print $offset postings starting from $start using the mysql connection $dbconnection, filtering by $species and $tags if needed
 // returns the next offset based on $offset and $amount
-function display_postings($species, $tags, $offset, $amount, $dbconnection) 
+function display_postings($tags, $offset, $amount, $dbconnection) 
 {
 
     $sql1 = "SELECT * FROM postings ";    
@@ -116,7 +116,7 @@ function display_postings($species, $tags, $offset, $amount, $dbconnection)
         echo "<DIV class='posting'>";
             echo "<DIV class='photo'><IMG /></DIV>";
             echo "<P><A href=''>".$row['email']."</A>, ".$row['daterefreshed'].", ".$row['refreshed']."</P>";
-            echo "<P>".$row['species'].": ".$row['tags']."</P>";
+            echo "<P>".$row['tags']."</P>";
         echo "</DIV>";
     }
 

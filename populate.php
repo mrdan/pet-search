@@ -130,7 +130,7 @@ function rand_date($start, $end) {
 }
 
 function populate_cat($linkid) {
-    $descrip = Array("male","female","neutered","not-neutered","long-haired","brown","lazy","playful","short-haired","black","white", "quick", "yellow", 
+    $descrip = Array("dog","cat","goat","giraffe","fox","pokemon","male","female","neutered","not-neutered","long-haired","brown","lazy","playful","short-haired","black","white", "quick", "yellow", 
                      "red", "grey", "tabby", "tortoise-shell", "orange", "green-eyed", "yellow-eyed", "nervous", "friendly"
                      );
 
@@ -189,8 +189,8 @@ reset($combolist);                                                          // j
 while (list($u,$t) = each($combolist)) {
     $s = rand_species();
     echo $u.": ".$t."<BR />";
-
-    $sql = "INSERT INTO postings(species,tags,email) VALUES('$s','$t','$u')";
+    $t = $s." ".$t;
+    $sql = "INSERT INTO postings(tags,email) VALUES('$t','$u')";
     if (!mysql_query($sql,$linkid))
     {
         die('Error: ' . mysql_error());

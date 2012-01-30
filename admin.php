@@ -28,9 +28,9 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
 	$chosen_category = $_POST["chosen_category"];
 
 	if ($chosen_category == "uncategorised")
-        $sql = "UPDATE tags SET category=DEFAULT WHERE ";
+        $sql = "UPDATE tags SET approved=1, category=DEFAULT WHERE ";
     else
-        $sql = "UPDATE tags SET category='$chosen_category' WHERE ";
+        $sql = "UPDATE tags SET approved=1, category='$chosen_category' WHERE ";
 
     $chosen_tags = explode(" ", $changed_tags);
     if(count($chosen_tags) == 1)
@@ -125,7 +125,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
     	</FORM>
     </DIV>
     <DIV class='lb_content' id="recat">
-    	To which category to you want to assign the tags: <SPAN id="tag_list">none</SPAN>?
+    	To which category to you want to assign the tags: <SPAN id="tag_list">none</SPAN>? (This will also automatically approve the tags)
 		<FORM id="tag_assign" action="admin.php" method="post">
       		<SELECT name="chosen_category">
       			<OPTION value="uncategorised">Uncategorised</OPTION>

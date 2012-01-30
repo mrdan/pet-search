@@ -25,7 +25,7 @@ if(isset($_GET['tags']))
 else
 	$tags = "";
 
-display_postings(0, $tags, $offset, 25, $linkid);
+display_postings($tags, $offset, 25, $linkid);
 
 // close connection
 mysql_close($linkid);
