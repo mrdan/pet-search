@@ -68,9 +68,10 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["approval"])) {
 		echo 'Error: ' . mysql_error(). '<BR />';
     }
 }
-//check for tag addition
+//check for tag addition // TODO: SANITISATION!!! We should only allow [a-z,0-9,-]
 if(isset($_POST['newtag']) && $_POST['chosen_category']) {
 	$newtag = $_POST['newtag'];
+	$newtag = strtolower($newtag); // all our tags will be lower case for consistency
 	$category = $_POST['chosen_category'];
 
 	if ($category == "uncategorised")
@@ -85,7 +86,8 @@ if(isset($_POST['newtag']) && $_POST['chosen_category']) {
 //check for tag deletion
 if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
 	$changed_tags = $_POST["chosen_tags"];
-	$sql = "DELETE FROM tags WHERE ";
+	//$sql = "DELETE FROM tags WHERE ";
+	$sql = "UPDATE tags SET approved=0 WHERE ";
 	$chosen_tags = explode(" ", $changed_tags);
     if(count($chosen_tags) == 1)
     	$sql = $sql."tag='$chosen_tags[0]'";
