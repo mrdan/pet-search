@@ -92,7 +92,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
 <DIV class='category'><DIV id="title">Personality</DIV><?php display_tag_category("personality",$linkid); ?></DIV>
 <DIV class='category'><DIV id="title">Location</DIV><?php display_tag_category("location",$linkid); ?></DIV>
 <DIV class='category'><DIV id="title">Uncategorised</DIV><?php display_tag_category(NULL,$linkid); ?></DIV>
-<BR />
+<DIV class='category'><DIV id="title">Pending Approval</DIV><?php display_tag_pending($linkid); ?></DIV>
 <BUTTON type="button" class="lightbox_trigger" name="add">Add</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="recat">Re-categorise</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="approve">Approve</BUTTON>

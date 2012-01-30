@@ -25,7 +25,7 @@ function display_tagcloud_php($linkid)
     else
         $url_tags = "";
 
-    $result = mysql_query("SELECT tags FROM postings");
+    $result = mysql_query("SELECT tags FROM postings",$linkid);
     $tags = array();
     while($row = mysql_fetch_array($result)) {
         $tags = array_merge($tags, explode(" ", $row['tags']));
@@ -51,11 +51,11 @@ function display_tagcloud_php($linkid)
 function display_tag_category($category,$linkid) {
 
     if ($category == NULL | $category == '')
-        $sql = "SELECT tag FROM tags WHERE category IS NULL";
+        $sql = "SELECT tag FROM tags WHERE category IS NULL AND approved=1 ORDER BY tag ASC";
     else
-        $sql = "SELECT tag FROM tags WHERE category='$category'";
+        $sql = "SELECT tag FROM tags WHERE category='$category' AND approved=1 ORDER BY tag ASC";
 
-    $result = mysql_query($sql);
+    $result = mysql_query($sql,$linkid);
     if(mysql_num_rows($result)==0){
         echo "No tags found for category ";
         return;
@@ -65,18 +65,22 @@ function display_tag_category($category,$linkid) {
         echo "<SPAN class='tag'>".$row['tag']."</SPAN> ";
 }
 
+function display_tag_pending($linkid) {
+    
+    $sql = "SELECT tag FROM tags WHERE approved=0";
+    $result = mysql_query($sql,$linkid);
+    if(mysql_num_rows($result)==0){
+        echo "No tags pending ";
+        return;
+    }
+    while ($row = mysql_fetch_array($result))
+            echo "<SPAN class='tag'>".$row['tag']."</SPAN> ";
+}
+
 function display_tagcloud_js($linkid) {
-    $result = mysql_query("SELECT tags FROM postings");
-    $tags = array();
-    while($row = mysql_fetch_array($result)) {
-        $tags = array_merge($tags, explode(" ", $row['tags']));
-    }
-
-    $tags = array_unique_compact($tags);
-
-    for($i=0;$i<count($tags);$i++) {
-        echo "<A class='tag' href='#".$tags[$i]."'>".$tags[$i]."</A> ";
-    }
+    $result = mysql_query("SELECT tag FROM tags",$linkid);
+    while($row = mysql_fetch_array($result))
+        echo "<A class='tag' href='#".$row['tag']."'>".$row['tag']."</A> ";
 }
 
 // print $offset postings starting from $start using the mysql connection $dbconnection, filtering by $species and $tags if needed

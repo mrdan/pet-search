@@ -84,6 +84,12 @@ div.posting > div.photo {
 
 /* Admin.php */
 div.category {
+	margin-bottom: 10px;
+}
+
+div.category > span.tag {
+	cursor: pointer;
+	text-decoration: underline;
 }
 
 div.category > div#title{
