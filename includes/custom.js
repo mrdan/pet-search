@@ -1,14 +1,14 @@
-
-// on load page...
 $(document).ready(function() {
     
-   $('a.tag').click(tagClick);
+  $('a.tag').click(tagClick);
 
-   //get the default postings (i.e. all of them)
-   query = "";
-   $.get("filter.php",query, function(data) {
-            $("#main").html(data);
-   });
+  $.ajax({
+    url: "filter.php",
+    data: { },
+    success: function(html){
+      $('div#main').html(html);
+    }
+  });
 });
 
 //rewrites the url properly when a tag is clicked
@@ -41,16 +41,23 @@ $(function(){
     	//need to parse the taglist from the anchor
     	var matchtags = window.location.href.match(/^[^#]+#([a-z,-]+(?:\/[a-z,-]+)*)/);
     	if (matchtags != null) {
-    		query = "tags=" + matchtags[1].replace(/\//g, '+');								//we split tags by / so we need to change them to + for php's sake
-    		$.get("filter.php",query,function(data) {
-    			$("#main").html(data);
-    		});
+        var query = "tags=" + matchtags[1].replace(/\//g, '+');
+        $.ajax({
+          url: "filter.php",
+          data: query,
+          success: function(html) {
+            $('div#main').html(html);
+          }
+        });
     	} else {
     		//no tags so our query is nothing! take the rest of the day off!
-    		query = "";
-    		$.get("filter.php",query,function(data) {
-    			$("#main").html(data);
-    		});
+    		$.ajax({
+          url: "filter.php",
+          data: { },
+          success: function(html) {
+            $('div#main').html(html);
+          }
+        });
     	}
 
     	//change "a" elements of class ".tag" so the selected ones are "hilite"d
