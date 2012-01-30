@@ -2,9 +2,6 @@
 <HEAD><TITLE>Pet Search Test</TITLE>
 <meta http-equiv="content-script-type" content="text/javascript">
 <LINK type="text/css" rel="stylesheet" href="includes/style.css" />
-<SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
-<SCRIPT type="text/javascript" src="includes/jquery.ba-hashchange.js"></SCRIPT>
-<SCRIPT type="text/javascript" src="includes/custom.js"></SCRIPT>
 </HEAD>
 <BODY>
 <?php @ require_once ('includes/custom.php'); ?>
@@ -40,4 +37,7 @@ I've (lost / found) a (<A class='tag' href='#male'>male</A> / <A class='tag' hre
 mysql_close($linkid);
 
 ?>
+<SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/jquery.ba-hashchange.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/custom.js"></SCRIPT>
 </BODY></HTML>

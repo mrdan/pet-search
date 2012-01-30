@@ -126,4 +126,37 @@ function display_postings($tags, $offset, $amount, $dbconnection)
 
     return $offset + $amount;
 }
+
+function get_postings_data($tags, $offset, $amount, $dbconnection){
+
+    $sql1 = "SELECT * FROM postings ";    
+    $sql2 = "ORDER BY daterefreshed DESC LIMIT ".$offset.",".$amount;
+
+    if(!$offset)
+        $offset = 0;
+    if(!$tags)
+        $sql = $sql1.$sql2;
+    else
+    {
+        $sql_tags1 = "WHERE ";
+        for ($i=0; $i < count($tags); $i++) { 
+            $sql_tags2 = "(tags LIKE '% ".$tags[$i]." %' OR tags LIKE '".$tags[$i] ." %' OR tags LIKE '% ".$tags[$i]."' OR tags = '".$tags[$i]."') ";
+            if($i < (count($tags) - 1))
+                $sql_tags2 = $sql_tags2."AND ";
+            $sql_tags1 = $sql_tags1.$sql_tags2;
+        }
+        $sql = $sql1.$sql_tags1.$sql2;
+    }
+
+    $result = mysql_query($sql,$dbconnection);
+    // jquery error plz
+    //if (!$result)
+    //    die('Error in display_postings: ' . mysql_error());
+    while($r = mysql_fetch_assoc($result)) {
+        $rows[] = $r;
+    }
+    echo json_encode($rows);
+
+    return $offset + $amount;    
+}
 ?>

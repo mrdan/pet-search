@@ -22,7 +22,8 @@ if(isset($_POST['tags']))
 else
 	$tags = Array();
 
-display_postings($tags, $offset, 25, $linkid);
+//display_postings($tags, $offset, 25, $linkid);
+get_postings_data($tags, 0, 25, $linkid);
 
 // close connection
 mysql_close($linkid);

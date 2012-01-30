@@ -1,15 +1,17 @@
 $(document).ready(function() {
-    
   $('a.tag').click(tagClick);
-
-  $.ajax({
-    url: "filter.php",
-    data: { },
-    success: function(html){
-      $('div#main').html(html);
-    }
-  });
 });
+
+function display_postings(data) {
+  var it = $.parseJSON(data);
+  var html = "";
+  $.each(it, function(i, posting){
+    html = html +"<DIV class='posting'><DIV class='photo'><IMG /></DIV>";
+    html = html + "<P><A href=''>" + posting.email + "</A></P>";
+    html = html + "<P>" + posting.tags + "</P></DIV>";
+  });
+  $('div#main').html(html);
+}
 
 //rewrites the url properly when a tag is clicked
 function tagClick() {
@@ -49,9 +51,7 @@ $(function(){
       url: "filter.php",
       type: "POST",
       data: {'tags': query },
-      success: function(html) {
-        $('div#main').html(html);
-      }
+      success: display_postings
     });
     
 
