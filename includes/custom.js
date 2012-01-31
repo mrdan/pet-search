@@ -2,9 +2,9 @@ $(document).ready(function() {
   $('a.tag').click(tagClick);
 
   $('div.newpostbutton').toggle(function () {
-    $("div.newpost").slideDown("slow");
+    $("div.newpost").slideDown();
   },function () {
-    $("div.newpost").slideUp("slow");
+    $("div.newpost").slideUp();
   });
 
 });
