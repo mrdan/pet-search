@@ -25,8 +25,24 @@ mysql_select_db($DBname,$linkid);
 <DIV class='container'>
 <DIV class='header'>Pet Search <IMG></DIV>
 <DIV class='intro'>
-I've (lost / found) a (<A class='tag' href='#male'>male</A> / <A class='tag' href='#female'>female</A>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon). We want to be able to click male or female and have the list below change to reflect the choice. The list should initially load with everything. <BR /><BR />
-<?php display_tagcloud_js($linkid); ?>
+<DIV class='intro_text'>Show me (<A class='tag' href='#male'>male</A> / <A class='tag' href='#female'>female</A>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon)s.</DIV>
+<DIV class='tagcloud'><?php display_tagcloud_js($linkid); ?></DIV>
+</DIV>
+<DIV class='newpostbutton'>add your pet...</DIV>
+<DIV class='newpost'>
+	<FORM id="ad_add" action="index.php" method="post">
+			<INPUT type="text" class="newText" title="Type in your tag, it will be automatically approved..." name="newtag" />
+			<SELECT name="chosen_category">
+      			<OPTION value="uncategorised">Uncategorised</OPTION>
+      			<OPTION value="species">Species</OPTION>
+      			<OPTION value="medical">Medical</OPTION>
+      			<OPTION value="visual">Visual</OPTION>
+      			<OPTION value="personality">Personality</OPTION>
+      			<OPTION value="location">Location</OPTION>
+      		</SELECT>
+			<INPUT type="Submit" name="tag_add_submit" value="Submit" />
+    		<BUTTON type="button" class="lightbox_cancel">Cancel</BUTTON>
+    </FORM>
 </DIV>
 <DIV class='main' id='main'></DIV>
 <DIV class='footer'><A href='?p=$offset'>Next 25</A></DIV>

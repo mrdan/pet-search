@@ -1,12 +1,19 @@
 $(document).ready(function() {
   $('a.tag').click(tagClick);
+
+  $('div.newpostbutton').toggle(function () {
+    $("div.newpost").slideDown("slow");
+  },function () {
+    $("div.newpost").slideUp("slow");
+  });
+
 });
 
 function display_postings(data) {
   var it = $.parseJSON(data);
   var html = "";
   $.each(it, function(i, posting){
-    html = html +"<DIV class='posting'><DIV class='photo'><IMG /></DIV>";
+    html = html +"<DIV class='posting'><IMG />";
     html = html + "<P><A href=''>" + posting.email + "</A></P>";
     html = html + "<P>" + posting.tags + "</P></DIV>";
   });

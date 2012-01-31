@@ -32,11 +32,10 @@ div.container {
 	margin: 50px auto;
 	margin-top: 0px;
 	width: 600px;
-	text-align: justify;
 }
 
 div.header {
-	border-bottom: 10px solid black;
+	border-bottom: 5px solid black;
 	font-size: 75px;
 	padding-bottom: 5px;
 	padding-top: 5px;
@@ -53,12 +52,28 @@ div.header img {
 }
 
 div.intro {
-    height: 200px;
     width: 100%;
-    border-bottom: 10px solid black
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 5px solid black
+}
+
+div.newpostbutton {
+	width: 100%;
+	height: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+div.newpost {
+	width: 100%;
+	height: 150px;
+	display: none;
 }
 
 div.main {
+	/* hai */
+	border-top: 1px dotted black;
+	padding-top: 10px;
 }
 
 div.posting {
@@ -66,20 +81,18 @@ div.posting {
     margin-top: 5px;
     margin-bottom: 5px;
     width: 100%;
-    height: 150px; 
-    /*overflow:auto;*/
+    height: 100px;
+    overflow:hidden;
 }
 
 div.posting img {
-    width: 150px;
-    height: 150px;
-}
-
-div.posting > div.photo {
     float: left;
     width: 150px;
-    height: 150px;
+    height: 100px;
     margin-right: 10px;
+}
+
+div.posting p {
 }
 
 /* Admin.php */
