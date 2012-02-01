@@ -10,6 +10,10 @@ $(document).ready(function() {
 });
 
 function display_postings(data) {
+  if(data == 'null') {
+    $('div#main').html('');
+    return false;
+  }
   var it = $.parseJSON(data);
   var html = "";
   $.each(it, function(i, posting){
