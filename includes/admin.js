@@ -29,7 +29,6 @@ function lightbox() {
 	$(".hilite").each(function() {
 		$selected.push($(this).text());
 	});
-	console.log($selected);
 	if ($selected.length > 0)
 		$('span#tag_list').html('"' + $selected.join('", "') + '"');
 	else

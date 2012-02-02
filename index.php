@@ -28,14 +28,14 @@ mysql_select_db($DBname,$linkid);
 	<DIV class='intro_text'>Show me (<A class='tag' href='#male'>male</A> / <A class='tag' href='#female'>female</A>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon)s.</DIV>
 	<DIV class='tagcloud'><?php display_tagcloud_js($linkid); ?></DIV>
 	<DIV class='newpost'>
-		<DIV id='newpostbutton'><P>or... add a pet</P></DIV>
+		<DIV id='newpostbutton'><P>or... add a pet using <SPAN id='tags_chosen'>some</SPAN> tags</P></DIV>
 		<DIV id='newpostform'>
 			<FORM id="pet_add" action="index.php" method="post">
 				<DIV id='first'>First, click some tags above</DIV>
-				<DIV id='second'>Second, <INPUT type="text" class='newText' title="give us your email address" name="email" /></DIV>
+				<DIV id='second'>Second, <INPUT type="text" class='newText' title="give us your email" name="email" /></DIV>
 				<DIV id='third'>Third, <button type="file" id="imageUpload"/>upload a picture</button></DIV>
 				<DIV id='photobox'>
-					<IMG id='thumb' src='puppy1.jpg' width=100 height=100/>
+					<IMG id='thumb' src='loading.jpg' width=100 height=100/>
 				</DIV>
 				<INPUT type="Submit" name="pet_add_submit" value="Submit" />
     		</FORM>

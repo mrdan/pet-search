@@ -28,6 +28,7 @@ $(document).ready(function() {
     
   $("input.newText").blur();
 
+  //photo upload
   var thumb = $('img#thumb'); 
 
   new AjaxUpload('imageUpload', {
@@ -127,6 +128,14 @@ $(function(){
     var query = [];
     if (matchtags != null) {
       var query = matchtags[1].split('/');
+    }
+
+    if (query.length == 0) {
+      $('span#tags_chosen').text('some');
+      $('div#first').css('color', 'black');
+    } else {    
+      $('span#tags_chosen').text('these');
+      $('div#first').css('color', 'grey');
     }
 
     $.ajax({

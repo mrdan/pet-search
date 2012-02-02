@@ -98,6 +98,9 @@ div.newpost > div#newpostform {
 	display: none;
 }
 
+div.newpost > div#first {
+}
+
 div#photobox {
 	width: 100%;
 	display: none;
