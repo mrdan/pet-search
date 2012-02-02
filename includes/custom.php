@@ -152,6 +152,7 @@ function get_postings_data($tags, $offset, $amount, $dbconnection){
     // jquery error plz
     //if (!$result)
     //    die('Error in display_postings: ' . mysql_error());
+    $rows = Array();
     while($r = mysql_fetch_assoc($result)) {
         $rows[] = $r;
     }

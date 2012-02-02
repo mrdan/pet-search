@@ -1,27 +1,98 @@
 $(document).ready(function() {
+  //select tags
   $('a.tag').click(tagClick);
 
-  $('div.newpostbutton').toggle(function () {
-    $("div.newpost").slideDown();
+  //add a pet form
+  $('div#newpostbutton').toggle(function () {
+    $("div#newpostform").slideDown();
   },function () {
-    $("div.newpost").slideUp();
+    $("div#newpostform").slideUp();
   });
+
+  //form email
+  $("input.newText").focus(function(srcc) {
+    if ($(this).val() == $(this)[0].title)
+    {
+      $(this).removeClass("newTextActive");
+      $(this).val("");
+    }
+  });
+    
+  $("input.newText").blur(function() {
+    if ($(this).val() == "")
+    {
+      $(this).addClass("newTextActive");
+      $(this).val($(this)[0].title);
+    }
+  });
+    
+  $("input.newText").blur();
+
+  var thumb = $('img#thumb'); 
+
+  new AjaxUpload('imageUpload', {
+    action: 'uploadimage.php',
+    name: 'photo',
+    onSubmit: function(file, extension) {
+      $('div#photobox').addClass('loading');
+      $("div#photobox").slideDown();
+    },
+    onComplete: function(file, response) {
+      thumb.load(function(){
+        $('div#photobox').removeClass('loading');
+        thumb.unbind();
+      });
+      thumb.attr('src', response);
+    }
+  });
+
+  //photobox selection
+  /*
+  $('<div><img src="puppy1.jpg" style="position: relative;" /><div>')
+        .css({
+            float: 'right',
+            position: 'relative',
+            overflow: 'hidden',
+            width: '100px',
+            height: '100px'
+        })
+        .insertAfter($('#photobox_photo'));
+
+  $('#photobox_photo').imgAreaSelect({
+    aspectRatio: '1:1',
+    handles: true,
+    onSelectEnd: thumb_preview
+  });
+  */
 
 });
+/*
+function thumb_preview(img, selection) {
+    var scaleX = 100 / (selection.width || 1);
+    var scaleY = 100 / (selection.height || 1);
+  
+    $('#photobox_photo + div > img').css({
+        width: Math.round(scaleX * 150) + 'px', //needs to match any specified heigh of image in index.php
+        height: Math.round(scaleY * 150) + 'px',
+        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+    });
+}*/
 
 function display_postings(data) {
-  if(data == 'null') {
-    $('div#main').html('');
-    return false;
+  if(data == '[]') {          // returns a string containing [] rather than just null or something else for some reason...
+    var html = "<DIV class='posting'><P>No pets matching those tags found</P></DIV>";
+    $('div#main').html(html);
+  } else {
+    var it = $.parseJSON(data);
+    var html = "";
+    $.each(it, function(i, posting){
+      html = html +"<DIV class='posting'><IMG />";
+      html = html + "<P><A href=''>" + posting.email + "</A></P>";
+      html = html + "<P>" + posting.tags + "</P></DIV>";
+    });
+    $('div#main').html(html);
   }
-  var it = $.parseJSON(data);
-  var html = "";
-  $.each(it, function(i, posting){
-    html = html +"<DIV class='posting'><IMG />";
-    html = html + "<P><A href=''>" + posting.email + "</A></P>";
-    html = html + "<P>" + posting.tags + "</P></DIV>";
-  });
-  $('div#main').html(html);
 }
 
 //rewrites the url properly when a tag is clicked
