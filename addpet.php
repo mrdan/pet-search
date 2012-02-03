@@ -36,7 +36,7 @@ if(isset($_POST["tags"]) && isset($_POST["email"]) && isset($_POST["photo"])) {
     	echo 'all done. bye bye.';
     	$old = "/var/www/pet-search/tmp/".$photo;
     	$new = "/var/www/pet-search/uploads/".$photo;
-    	rename($old, $new);
+    	rename($old, $new); //TODO: file not found? user must have dawdled and the tmp file got deleted. make them reupload.
     }
 }
 ?>
