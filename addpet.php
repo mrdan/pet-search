@@ -22,7 +22,7 @@ if(isset($_POST["tags"]) && isset($_POST["email"]) && isset($_POST["photo"])) {
     //put any new tags into tags table
     for ($i=0; $i < count($tags_arr); $i++) { 
     	$tagsql = "INSERT INTO tags(tag) VALUES ('$tags_arr[$i]')";
-    	mysql_query($sql,$linkid);
+    	mysql_query($tagsql,$linkid);
     }
 
     //TODO: sanitise / check vars
@@ -34,6 +34,9 @@ if(isset($_POST["tags"]) && isset($_POST["email"]) && isset($_POST["photo"])) {
 		echo 'Error: ' . mysql_error(). '<BR />';
     } else {
     	echo 'all done. bye bye.';
+    	$old = "/var/www/pet-search/tmp/".$photo;
+    	$new = "/var/www/pet-search/uploads/".$photo;
+    	rename($old, $new);
     }
 }
 ?>

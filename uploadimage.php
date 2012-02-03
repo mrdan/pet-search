@@ -1,5 +1,5 @@
 <?PHP
-$uploaddir = '/var/www/pet-search/uploads/';
+$uploaddir = '/var/www/pet-search/tmp/';
 $uploadfile = $uploaddir . basename($_POST["pname"]).'.'. $_POST["pext"];
 if (move_uploaded_file($_FILES['photo']['tmp_name'], $uploadfile)) {
   echo $_POST["pname"].'.'. $_POST["pext"];

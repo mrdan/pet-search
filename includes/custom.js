@@ -30,7 +30,7 @@ $(document).ready(function() {
 
   //photo upload
   var $randomnumber=Math.floor(Math.random()*1000000000000)
-  var $perm_name = new Date().getTime() + "" + $randomnumber;  // middle "" just makes the date a string so we dont just add two numbers together
+  var $perm_name = new Date().getTime() + "." + $randomnumber;  // middle "" just makes the date a string so we dont just add two numbers together
   var thumb = $('img#thumb'); 
 
   var ajax_up = new AjaxUpload('imageUpload', {
@@ -51,7 +51,7 @@ $(document).ready(function() {
         $('div#photobox').removeClass('loading');
         thumb.unbind();
       });
-      thumb.attr('src', 'uploads/'+response);
+      thumb.attr('src', 'tmp/'+response);
       $('input#photo_name').val(response);
       this.enable();
     }
@@ -111,7 +111,9 @@ function thumb_preview(img, selection) {
 }*/
 
 function tmp_addpet(data) {
+  //display "done" message
   $('div#newpostform').html(data);
+  //refresh shown entries to show post was added (maybe highlight it?)
   var query = [];
   $.ajax({
     url: "filter.php",
