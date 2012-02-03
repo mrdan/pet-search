@@ -32,12 +32,14 @@ mysql_select_db($DBname,$linkid);
 		<DIV id='newpostform'>
 			<FORM id="pet_add" action="index.php" method="post">
 				<DIV id='first'>First, click some tags above</DIV>
-				<DIV id='second'>Second, <INPUT type="text" class='newText' title="give us your email" name="email" /></DIV>
+				<DIV id='second'>Second, <INPUT type="text" class='newText' id='email' title="give us your email" name="email" /></DIV>
 				<DIV id='third'>Third, <button type="file" id="imageUpload"/>upload a picture</button></DIV>
 				<DIV id='photobox'>
 					<IMG id='thumb' src='loading.jpg' width=100 height=100/>
 				</DIV>
-				<INPUT type="Submit" name="pet_add_submit" value="Submit" />
+				<INPUT type="hidden" id="sub_tags" name="sub_tags" value="" />
+				<INPUT type="hidden" id="photo_name" name="photo_name" value="0" />
+				<BUTTON type="button" class='pet_add_submit' name="pet_add_submit" value="Submit">Submit</BUTTON>
     		</FORM>
 		</DIV>
 	</DIV>

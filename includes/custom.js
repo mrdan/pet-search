@@ -51,9 +51,31 @@ $(document).ready(function() {
         $('div#photobox').removeClass('loading');
         thumb.unbind();
       });
-      thumb.attr('src', response);
+      thumb.attr('src', 'uploads/'+response);
+      $('input#photo_name').val(response);
       this.enable();
     }
+  });
+
+  //pet add
+  $('button.pet_add_submit').click( function(){
+    //get data from form
+    //send to addpet.php
+    //wait
+    //process response
+    //change ui appropriately
+      //if successful clear form
+      //if not highlight problem if possible
+    $.ajax({
+      url: "addpet.php",
+      type: "POST",
+      data: {
+        'tags': $('input#sub_tags').val(),
+        'photo': $('input#photo_name').val(),
+        'email': $('input#email').val(),
+      },
+      success: tmp_addpet,
+    });
   });
 
   //photobox selection
@@ -88,6 +110,10 @@ function thumb_preview(img, selection) {
         marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
     });
 }*/
+
+function tmp_addpet(data) {
+  $('div#newpostform').html(data);
+}
 
 function display_postings(data) {
   if(data == '[]') {          // returns a string containing [] rather than just null or something else for some reason...
@@ -142,8 +168,10 @@ $(function(){
     if (query.length == 0) {
       $('span#tags_chosen').text('some');
       $('div#first').css('color', 'black');
+      $('input#sub_tags').val('');
     } else {    
       $('span#tags_chosen').text('these');
+      $('input#sub_tags').val(matchtags[1].replace(/\//g,' '));
       $('div#first').css('color', 'grey');
     }
 
