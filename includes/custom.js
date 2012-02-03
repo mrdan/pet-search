@@ -61,11 +61,6 @@ $(document).ready(function() {
   $('button.pet_add_submit').click( function(){
     //get data from form
     //send to addpet.php
-    //wait
-    //process response
-    //change ui appropriately
-      //if successful clear form
-      //if not highlight problem if possible
     $.ajax({
       url: "addpet.php",
       type: "POST",
@@ -74,7 +69,11 @@ $(document).ready(function() {
         'photo': $('input#photo_name').val(),
         'email': $('input#email').val(),
       },
+      //process response
       success: tmp_addpet,
+      //change ui appropriately
+      //if successful clear form
+      //if not highlight problem if possible
     });
   });
 
@@ -113,6 +112,13 @@ function thumb_preview(img, selection) {
 
 function tmp_addpet(data) {
   $('div#newpostform').html(data);
+  var query = [];
+  $.ajax({
+    url: "filter.php",
+    type: "POST",
+    data: {'tags': query },
+    success: display_postings
+  });
 }
 
 function display_postings(data) {
@@ -123,7 +129,7 @@ function display_postings(data) {
     var it = $.parseJSON(data);
     var html = "";
     $.each(it, function(i, posting){
-      html = html +"<DIV class='posting'><IMG />";
+      html = html +"<DIV class='posting'><IMG src='uploads/" + posting.photo+ "'/>";
       html = html + "<P><A href=''>" + posting.email + "</A></P>";
       html = html + "<P>" + posting.tags + "</P></DIV>";
     });
