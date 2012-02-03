@@ -29,12 +29,20 @@ $(document).ready(function() {
   $("input.newText").blur();
 
   //photo upload
+  var $randomnumber=Math.floor(Math.random()*1000000000000)
+  var $perm_name = new Date().getTime() + "" + $randomnumber;  // middle "" just makes the date a string so we dont just add two numbers together
   var thumb = $('img#thumb'); 
 
-  new AjaxUpload('imageUpload', {
+  var ajax_up = new AjaxUpload('imageUpload', {
     action: 'uploadimage.php',
     name: 'photo',
+    data: {
+      pext: '',
+      pname : $perm_name
+    },
     onSubmit: function(file, extension) {
+      this.setData({'pext': extension, 'pname': $perm_name});
+      this.disable();
       $('div#photobox').addClass('loading');
       $("div#photobox").slideDown();
     },
@@ -44,6 +52,7 @@ $(document).ready(function() {
         thumb.unbind();
       });
       thumb.attr('src', response);
+      this.enable();
     }
   });
 
