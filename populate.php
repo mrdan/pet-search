@@ -129,29 +129,15 @@ function rand_date($start, $end) {
     return $rand_date;
 }
 
-function populate_cat($linkid) {
+function populate_cat() {
     $descrip = Array("dog","cat","goat","giraffe","fox","pokemon","male","female","neutered","not-neutered","long-haired","brown","lazy","playful","short-haired","black","white", "quick", "yellow", 
                      "red", "grey", "tabby", "tortoise-shell", "orange", "green-eyed", "yellow-eyed", "nervous", "friendly"
                      );
 
     for ($i=0; $i < count($descrip); $i++) { 
         $sql = "INSERT INTO tags(tag) VALUES('$descrip[$i]')";
-        if (!mysql_query($sql,$linkid))
-            echo 'Error: ' . mysql_error().'<br />';
+        DEBASER::write($sql);
     }
-}
-
-//
-// Main
-//
-$DBhost = "127.0.0.1";
-$DBuser = "pet_user";
-$DBpass = "234rewf2";
-$DBname = "petsearch";
-
-$linkid = mysql_connect($DBhost,$DBuser,$DBpass);
-if (!$linkid) {
-    die("Unable to connect to database".mysql_error());
 }
 
 $counter = $_GET['c'];
@@ -184,19 +170,15 @@ if($unique == 1) {
 }
 
 // time to populate
-mysql_select_db($DBname, $linkid);
 reset($combolist);                                                          // just in case the pointer has moved
 while (list($u,$t) = each($combolist)) {
     $s = rand_species();
     echo $u.": ".$t."<BR />";
     $t = $s." ".$t;
     $sql = "INSERT INTO postings(tags,email) VALUES('$t','$u')";
-    if (!mysql_query($sql,$linkid))
-    {
-        die('Error: ' . mysql_error());
-    }
+    DEBASER::write($sql);
 }
-populate_cat($linkid);
+populate_cat();
 
-mysql_close($linkid);
+DEBASER::disconnect();
 ?>

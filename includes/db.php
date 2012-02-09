@@ -2,41 +2,37 @@
 //SQL is for masochists
 class Debaser {
 
-	var $DBhost = "";
-	var $DBuser = "";
-	var $DBpass = "";
-	var $DBname = "";
+	private static $DBhost = "127.0.0.1";
+	private static $DBuser = "pet_user";
+	private static $DBpass = "234rewf2";
+	private static $DBname = "petsearch";
 
-	var $linkid = null;
-	var $result = null;
+	private static $instance = null;
 
-	var $dbh = null;
+	private function __construct() {}
 
-	function Debaser($host, $user, $pass, $name) {
+	private function __clone(){}
 
-		$this->DBhost = $host;
-		$this->DBuser = $user;
-		$this->DBpass = $pass;
-		$this->DBname = $name;
-		
-	}
-
-	function connect() {
-		try 
+	private static function getInstance() {
+		try
 		{
-    		$this->dbh = new PDO("mysql:host=$this->DBhost;dbname=$this->DBname", $this->DBuser, $this->DBpass);
-
-    	}
+			if (!self::$instance)
+    		{
+    			self::$instance = new PDO("mysql:host=".self::$DBhost.";dbname=".self::$DBname, self::$DBuser, self::$DBpass);
+    			self::$instance-> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    		}
+			return self::$instance;
+		}
 		catch(PDOException $e)
     	{
-    		die("Unable to connect to database ".$e->getMessage());
+    		die("Unable to create instance ".$e->getMessage());
     	}
 	}
 
-	function disconnect() {
+	public static function disconnect() {
 		try 
 		{
-    		$this->dbh = null;
+    		self::$instance = null;
     	}
 		catch(PDOException $e)
     	{
@@ -45,10 +41,11 @@ class Debaser {
 	}
 
 	//only for select sql statements. returns array of results.
-	function select($sql) {
+	public static function select($sql) {
 		try 
 		{
-			return $this->dbh->query($sql);
+			self::getInstance();
+			return self::$instance->query($sql);
 		}
 		catch (PDOException $e) 
 		{
@@ -57,10 +54,11 @@ class Debaser {
 	}
 
 	//only for update / insert sql statements. returns count of rows affected.
-	function write($sql) {
+	public static function write($sql) {
 		try 
 		{
-			return $this->dbh->exec($sql);
+			self::getInstance();
+			return self::$instance->exec($sql);
 		}
 		catch(PDOException $e)
 		{

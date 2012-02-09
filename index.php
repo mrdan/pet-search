@@ -4,13 +4,8 @@
 <LINK type="text/css" rel="stylesheet" href="includes/style.css" />
 </HEAD>
 <BODY>
-<?php @ require_once ('includes/settings.php'); ?>
 <?php @ require_once ('includes/custom.php'); ?>
-<?php @ require_once ('includes/db.php'); ?>
 <?php
-
-$db = new Debaser($DBhost, $DBuser, $DBpass, $DBname);
-$db->connect();
 //
 // Begin site
 ?>
@@ -18,7 +13,7 @@ $db->connect();
 <DIV class='header'>Pet Search <IMG></DIV>
 <DIV class='intro'>
 	<DIV class='intro_text'>Show me (<A class='tag' href='#male'>male</A> / <A class='tag' href='#female'>female</A>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon)s.</DIV>
-	<DIV class='tagcloud'><?php display_tagcloud_js($db); ?></DIV>
+	<DIV class='tagcloud'><?php display_tagcloud_js(); ?></DIV>
 	<DIV class='newpost'>
 		<DIV id='newpostbutton'><P>or... add a pet using <SPAN id='tags_chosen'>some</SPAN> tags</P></DIV>
 		<DIV id='newpostform'>
@@ -39,13 +34,7 @@ $db->connect();
 <DIV class='main' id='main'></DIV>
 <DIV class='footer'><A href='?p=$offset'>Next 25</A></DIV>
 </DIV>
-
-<?php
-
-// close connection
-$db->disconnect();
-
-?>
+<?PHP DEBASER::disconnect(); ?>
 <SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
 <SCRIPT type="text/javascript" src="includes/jquery.ba-hashchange.js"></SCRIPT>
 <SCRIPT type="text/javascript" src="includes/ajaxupload.js"></SCRIPT>

@@ -9,9 +9,6 @@
 <?php @ require_once ('includes/db.php'); ?>
 <?php
 
-$db = new Debaser($DBhost, $DBuser, $DBpass, $DBname);
-$db->connect();
-
 //check and process $_POST
 //check for tag reassignment
 if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
@@ -35,7 +32,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
     	}
     }
 
-	$db->write($sql);
+	DEBASER::write($sql);
 }
 //check for tag approval
 if(isset($_POST["chosen_tags"]) && isset($_POST["approval"])) {
@@ -53,7 +50,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["approval"])) {
     	}
     }
 
-	$db->write($sql);
+	DEBASER::write($sql);
 }
 //check for tag addition // TODO: SANITISATION!!! We should only allow [a-z,0-9,-]
 if(isset($_POST['newtag']) && $_POST['chosen_category']) {
@@ -66,7 +63,7 @@ if(isset($_POST['newtag']) && $_POST['chosen_category']) {
     else
 		$sql = "INSERT INTO tags(tag,category,approved) VALUES('$newtag','$category',1)";
 
-	$db->write($sql);
+	DEBASER::write($sql);
 }
 //check for tag unapproval
 if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
@@ -85,7 +82,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
     	}
     }
 
-	$db->write($sql);
+	DEBASER::write($sql);
 }
 
 
@@ -151,20 +148,20 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
 
 
 
-<DIV class='category'><DIV id="title">Species</DIV><?php display_tag_category("species",$db); ?></DIV>
-<DIV class='category'><DIV id="title">Medical</DIV><?php display_tag_category("medical",$db); ?></DIV>
-<DIV class='category'><DIV id="title">Visual</DIV><?php display_tag_category("visual",$db); ?></DIV>
-<DIV class='category'><DIV id="title">Personality</DIV><?php display_tag_category("personality",$db); ?></DIV>
-<DIV class='category'><DIV id="title">Location</DIV><?php display_tag_category("location",$db); ?></DIV>
-<DIV class='category'><DIV id="title">Uncategorised</DIV><?php display_tag_category(NULL,$db); ?></DIV>
-<DIV class='category'><DIV id="title">Pending Approval</DIV><?php display_tag_pending($db); ?></DIV>
+<DIV class='category'><DIV id="title">Species</DIV><?php display_tag_category("species"); ?></DIV>
+<DIV class='category'><DIV id="title">Medical</DIV><?php display_tag_category("medical"); ?></DIV>
+<DIV class='category'><DIV id="title">Visual</DIV><?php display_tag_category("visual"); ?></DIV>
+<DIV class='category'><DIV id="title">Personality</DIV><?php display_tag_category("personality"); ?></DIV>
+<DIV class='category'><DIV id="title">Location</DIV><?php display_tag_category("location"); ?></DIV>
+<DIV class='category'><DIV id="title">Uncategorised</DIV><?php display_tag_category(NULL); ?></DIV>
+<DIV class='category'><DIV id="title">Pending Approval</DIV><?php display_tag_pending(); ?></DIV>
 <BUTTON type="button" class="lightbox_trigger" name="add">Add</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="recat">Re-categorise</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="approve">Approve</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="delete">Unapprove</BUTTON>
 
 <?php
-$db->disconnect();
+DEBASER::disconnect();
 ?>
 <SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
 <SCRIPT type="text/javascript" src="includes/admin.js"></SCRIPT>
