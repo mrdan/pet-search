@@ -6,7 +6,13 @@ if(isset($_POST["tags"]) && isset($_POST["email"]) && isset($_POST["photo"])) {
 	$tags = $_POST["tags"];
 	$tags_arr  = explode(" ", $_POST["tags"]);
 	$photo = $_POST["photo"];
-	$email = $_POST["email"];
+
+    // clean the email address and check it
+    $email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) { 
+        echo "Email fail"; 
+        die();
+    }
 
     //put any new tags into tags table
     for ($i=0; $i < count($tags_arr); $i++) { 
