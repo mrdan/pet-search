@@ -7,8 +7,10 @@ class Debaser {
 	var $DBpass = "";
 	var $DBname = "";
 
-	var $linkid;
-	var $result;
+	var $linkid = null;
+	var $result = null;
+
+	var $dbh = null;
 
 	function Debaser($host, $user, $pass, $name) {
 
@@ -20,35 +22,50 @@ class Debaser {
 	}
 
 	function connect() {
-		$this->linkid = mysql_connect($this->DBhost,$this->DBuser,$this->DBpass);
-		if (!$this->linkid) {
-    		die("Unable to connect to database".mysql_error());
+		try 
+		{
+    		$this->dbh = new PDO("mysql:host=$this->DBhost;dbname=$this->DBname", $this->DBuser, $this->DBpass);
+
     	}
-		mysql_select_db($this->DBname,$this->linkid);
+		catch(PDOException $e)
+    	{
+    		die("Unable to connect to database ".$e->getMessage());
+    	}
 	}
 
 	function disconnect() {
-		mysql_close($this->linkid);
+		try 
+		{
+    		$this->dbh = null;
+    	}
+		catch(PDOException $e)
+    	{
+    		die("Unable to connect to disconnect ".$e->getMessage());
+    	}
 	}
 
-	function change_db($newdb) {
-		$this->DBname = $newdb;
-		mysql_select_db($this->DBname, $this->linkid);
-	}
-
-
+	//only for select sql statements. returns array of results.
 	function select($sql) {
-		$this->result = mysql_query($sql,$this->linkid);
-		if(!$this->result)
-			die('Error in debaser select: ' . mysql_error());
-		return $this->result;
+		try 
+		{
+			return $this->dbh->query($sql);
+		}
+		catch (PDOException $e) 
+		{
+			die("Unable to select ".$e->getMessage());
+		}
 	}
 
+	//only for update / insert sql statements. returns count of rows affected.
 	function write($sql) {
-		$this->result = mysql_query($sql,$this->linkid);
-		if(!$this->result)
-			die('Error in debaser select: ' . mysql_error());
-		return $this->result;
+		try 
+		{
+			return $this->dbh->exec($sql);
+		}
+		catch(PDOException $e)
+		{
+			die("Unable to write ".$e->getMessage());
+		}
 	}
 }
 
