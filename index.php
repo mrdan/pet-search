@@ -4,21 +4,13 @@
 <LINK type="text/css" rel="stylesheet" href="includes/style.css" />
 </HEAD>
 <BODY>
+<?php @ require_once ('includes/settings.php'); ?>
 <?php @ require_once ('includes/custom.php'); ?>
+<?php @ require_once ('includes/db.php'); ?>
 <?php
 
-// db setup
-$DBhost = "127.0.0.1";
-$DBuser = "pet_user";
-$DBpass = "234rewf2";
-$DBname = "petsearch";
-
-$linkid = mysql_connect($DBhost,$DBuser,$DBpass);
-if (!$linkid) {
-    die("Unable to connect to database".mysql_error());
-}
-mysql_select_db($DBname,$linkid);
-
+$db = new Debaser($DBhost, $DBuser, $DBpass, $DBname);
+$db->connect();
 //
 // Begin site
 ?>
@@ -26,7 +18,7 @@ mysql_select_db($DBname,$linkid);
 <DIV class='header'>Pet Search <IMG></DIV>
 <DIV class='intro'>
 	<DIV class='intro_text'>Show me (<A class='tag' href='#male'>male</A> / <A class='tag' href='#female'>female</A>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon)s.</DIV>
-	<DIV class='tagcloud'><?php display_tagcloud_js($linkid); ?></DIV>
+	<DIV class='tagcloud'><?php display_tagcloud_js($db); ?></DIV>
 	<DIV class='newpost'>
 		<DIV id='newpostbutton'><P>or... add a pet using <SPAN id='tags_chosen'>some</SPAN> tags</P></DIV>
 		<DIV id='newpostform'>
@@ -49,8 +41,9 @@ mysql_select_db($DBname,$linkid);
 </DIV>
 
 <?php
+
 // close connection
-mysql_close($linkid);
+$db->disconnect();
 
 ?>
 <SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>

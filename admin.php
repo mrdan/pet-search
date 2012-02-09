@@ -4,20 +4,13 @@
 <LINK type="text/css" rel="stylesheet" href="includes/style.css" />
 </HEAD>
 <BODY>
+<?php @ require_once ('includes/settings.php'); ?>
 <?php @ require_once ('includes/custom.php'); ?>
+<?php @ require_once ('includes/db.php'); ?>
 <?php
 
-// db setup
-$DBhost = "127.0.0.1";
-$DBuser = "pet_user";
-$DBpass = "234rewf2";
-$DBname = "petsearch";
-
-$linkid = mysql_connect($DBhost,$DBuser,$DBpass);
-if (!$linkid) {
-    die("Unable to connect to database".mysql_error());
-}
-mysql_select_db($DBname,$linkid);
+$db = new Debaser($DBhost, $DBuser, $DBpass, $DBname);
+$db->connect();
 
 //check and process $_POST
 //check for tag reassignment
@@ -42,9 +35,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["chosen_category"])) {
     	}
     }
 
-	if (!mysql_query($sql,$linkid)) {
-		echo 'Error: ' . mysql_error(). '<BR />';
-    }
+	$db->write($sql);
 }
 //check for tag approval
 if(isset($_POST["chosen_tags"]) && isset($_POST["approval"])) {
@@ -62,9 +53,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["approval"])) {
     	}
     }
 
-	if (!mysql_query($sql,$linkid)) {
-		echo 'Error: ' . mysql_error(). '<BR />';
-    }
+	$db->write($sql);
 }
 //check for tag addition // TODO: SANITISATION!!! We should only allow [a-z,0-9,-]
 if(isset($_POST['newtag']) && $_POST['chosen_category']) {
@@ -77,9 +66,7 @@ if(isset($_POST['newtag']) && $_POST['chosen_category']) {
     else
 		$sql = "INSERT INTO tags(tag,category,approved) VALUES('$newtag','$category',1)";
 
-	if (!mysql_query($sql,$linkid)) {
-		echo 'Error: ' . mysql_error(). '<BR />';
-    }
+	$db->write($sql);
 }
 //check for tag unapproval
 if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
@@ -98,9 +85,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
     	}
     }
 
-	if (!mysql_query($sql,$linkid)) {
-		echo 'Error: ' . mysql_error(). '<BR />';
-    }
+	$db->write($sql);
 }
 
 
@@ -166,20 +151,20 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
 
 
 
-<DIV class='category'><DIV id="title">Species</DIV><?php display_tag_category("species",$linkid); ?></DIV>
-<DIV class='category'><DIV id="title">Medical</DIV><?php display_tag_category("medical",$linkid); ?></DIV>
-<DIV class='category'><DIV id="title">Visual</DIV><?php display_tag_category("visual",$linkid); ?></DIV>
-<DIV class='category'><DIV id="title">Personality</DIV><?php display_tag_category("personality",$linkid); ?></DIV>
-<DIV class='category'><DIV id="title">Location</DIV><?php display_tag_category("location",$linkid); ?></DIV>
-<DIV class='category'><DIV id="title">Uncategorised</DIV><?php display_tag_category(NULL,$linkid); ?></DIV>
-<DIV class='category'><DIV id="title">Pending Approval</DIV><?php display_tag_pending($linkid); ?></DIV>
+<DIV class='category'><DIV id="title">Species</DIV><?php display_tag_category("species",$db); ?></DIV>
+<DIV class='category'><DIV id="title">Medical</DIV><?php display_tag_category("medical",$db); ?></DIV>
+<DIV class='category'><DIV id="title">Visual</DIV><?php display_tag_category("visual",$db); ?></DIV>
+<DIV class='category'><DIV id="title">Personality</DIV><?php display_tag_category("personality",$db); ?></DIV>
+<DIV class='category'><DIV id="title">Location</DIV><?php display_tag_category("location",$db); ?></DIV>
+<DIV class='category'><DIV id="title">Uncategorised</DIV><?php display_tag_category(NULL,$db); ?></DIV>
+<DIV class='category'><DIV id="title">Pending Approval</DIV><?php display_tag_pending($db); ?></DIV>
 <BUTTON type="button" class="lightbox_trigger" name="add">Add</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="recat">Re-categorise</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="approve">Approve</BUTTON>
 <BUTTON type="button" class="lightbox_trigger" name="delete">Unapprove</BUTTON>
 
 <?php
-mysql_close($linkid);
+$db->disconnect();
 ?>
 <SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
 <SCRIPT type="text/javascript" src="includes/admin.js"></SCRIPT>

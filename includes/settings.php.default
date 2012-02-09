@@ -1,0 +1,9 @@
+<?PHP
+
+// db setup
+$DBhost = "127.0.0.1";
+$DBuser = "pet_user";
+$DBpass = "234rewf2";
+$DBname = "petsearch";
+
+?>
