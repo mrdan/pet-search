@@ -1,4 +1,5 @@
-<?php @ require_once ('includes/custom.php'); ?>
+<?php require('includes/db.php'); ?>
+<?php require('includes/custom.php'); ?>
 <?php
 
 // returns an array containing $count email addresses. $unique == 1 means just return unique entries

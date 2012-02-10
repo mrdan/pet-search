@@ -1,4 +1,5 @@
-<?php @ require_once ('includes/custom.php'); ?>
+<?php require('includes/db.php'); ?>
+<?php require('includes/custom.php'); ?>
 <?php
 
 // check our gets

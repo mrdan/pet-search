@@ -1,4 +1,3 @@
-<?php @ require_once ('includes/db.php'); ?>
 <?php
 // remove duplicate tags from an array
 function array_unique_compact($a) 

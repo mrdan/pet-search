@@ -1,12 +1,13 @@
 <HTML>
 <HEAD><TITLE>Pet Search Test Admin</TITLE>
 <meta http-equiv="content-script-type" content="text/javascript">
-<LINK type="text/css" rel="stylesheet" href="includes/style.css" />
+<LINK type="text/css" rel="stylesheet" href="../includes/style.css" />
 </HEAD>
 <BODY>
-<?php @ require_once ('includes/settings.php'); ?>
-<?php @ require_once ('includes/custom.php'); ?>
-<?php @ require_once ('includes/db.php'); ?>
+<?php define('__ROOT__', dirname(dirname(__FILE__))); ?>
+<?php require(__ROOT__.'/includes/settings.php'); ?>
+<?php require(__ROOT__.'/includes/db.php'); ?>
+<?php require(__ROOT__.'/includes/custom.php'); ?>
 <?php
 
 //check and process $_POST
@@ -163,7 +164,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
 <?php
 DEBASER::disconnect();
 ?>
-<SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
-<SCRIPT type="text/javascript" src="includes/admin.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="../includes/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="../includes/admin.js"></SCRIPT>
 </BODY>
 </HTML>

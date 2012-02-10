@@ -4,7 +4,8 @@
 <LINK type="text/css" rel="stylesheet" href="includes/style.css" />
 </HEAD>
 <BODY>
-<?php @ require_once ('includes/custom.php'); ?>
+<?php require('includes/db.php'); ?>
+<?php require('includes/custom.php'); ?>
 <?php
 //
 // Begin site

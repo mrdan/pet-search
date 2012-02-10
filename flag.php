@@ -1,4 +1,5 @@
-<?php @ require_once ('includes/custom.php'); ?>
+<?php require('includes/db.php'); ?>
+<?php require('includes/custom.php'); ?>
 <?php
 
 // 0 = default, -1 = protected (ie an admin allowed it), >0 = number of times reported
@@ -10,7 +11,7 @@ if(isset($_POST['id'])) {
 
 	//check if id already exists
 	$exists = DEBASER::select("SELECT * FROM flagged WHERE id=$id");
-	
+
 	if($exists->fetchColumn()) {
 		//if it does check is protected
 		foreach($exists as $post) {

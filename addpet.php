@@ -1,4 +1,4 @@
-<?php @ require_once ('includes/db.php'); ?>
+<?php require('includes/db.php'); ?>
 <?php
 
 //check and process $_POST
