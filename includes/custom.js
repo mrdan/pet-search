@@ -1,3 +1,49 @@
+$(function(){
+  
+  // Bind an event to window.onhashchange that, when the hash changes, activates
+  $(window).hashchange( function() {
+    var hash = location.hash;
+    
+    //need to parse the taglist from the anchor
+    var matchtags = window.location.href.match(/^[^#]+#([a-z,0-9,-]+(?:\/[a-z,0-9,-]+)*)/);
+    var query = [];
+    if (matchtags != null) {
+      var query = matchtags[1].split('/');
+    }
+
+    if (query.length == 0) {
+      $('span#tags_chosen').text('some');
+      $('div#first').css('color', 'black');
+      $('input#sub_tags').val('');
+    } else {    
+      $('span#tags_chosen').text('these');
+      $('input#sub_tags').val(matchtags[1].replace(/\//g,' '));
+      $('div#first').css('color', 'grey');
+    }
+
+    $.ajax({
+      url: "filter.php",
+      type: "POST",
+      data: {'tags': query },
+      success: display_postings
+    });
+
+    //change "a" elements of class ".tag" so the selected ones are "hilite"d
+    $('a.tag').each(function(){
+      var that = $(this);
+      var reg_pattern = '((?:^#)' + $(this).text() + '$)|((?:^#)' + $(this).text() + '\/)|([\/]' + $(this).text() + '((?=\/)|$))';
+      var re_this = new RegExp(reg_pattern,'g');
+      var taginurl = re_this.test(window.location.hash);
+
+      that[ taginurl ? 'addClass' : 'removeClass' ]( 'hilite' );
+    });
+  });
+  
+  // Since the event is only triggered when the hash changes, we need to trigger
+  // the event now, to handle the hash the page may have loaded with.
+  $(window).hashchange();
+});
+
 $(document).ready(function() {
   //select tags
   $('a.tag').click(tagClick);
@@ -133,9 +179,11 @@ function display_postings(data) {
     $.each(it, function(i, posting){
       html = html +"<DIV class='posting'><IMG src='uploads/" + posting.photo+ "'/>";
       html = html + "<P><A href=''>" + posting.email + "</A></P>";
-      html = html + "<P>" + posting.tags + "</P></DIV>";
+      html = html + "<P>" + posting.tags + "</P>";
+      html = html + "<P><BUTTON class='report' post='" + posting.id + "'>Flag this post</BUTTON></P></DIV>";
     });
     $('div#main').html(html);
+    $("button.report").click(flagClick);
   }
 }
 
@@ -160,49 +208,16 @@ function tagClick() {
     return false;																			//this stops the rest of the click event happening (i.e. the url ressetting to the actual href (just the one tag) of the link)
 }
 
-$(function(){
-  
-	// Bind an event to window.onhashchange that, when the hash changes, activates
-  $(window).hashchange( function() {
-    var hash = location.hash;
-    
-    //need to parse the taglist from the anchor
-    var matchtags = window.location.href.match(/^[^#]+#([a-z,0-9,-]+(?:\/[a-z,0-9,-]+)*)/);
-    var query = [];
-    if (matchtags != null) {
-      var query = matchtags[1].split('/');
-    }
+function flagClick() {
 
-    if (query.length == 0) {
-      $('span#tags_chosen').text('some');
-      $('div#first').css('color', 'black');
-      $('input#sub_tags').val('');
-    } else {    
-      $('span#tags_chosen').text('these');
-      $('input#sub_tags').val(matchtags[1].replace(/\//g,' '));
-      $('div#first').css('color', 'grey');
-    }
+  var $post_id = 0;
+  $post_id = $(this).attr('post');
+  console.log($post_id);
 
-    $.ajax({
-      url: "filter.php",
-      type: "POST",
-      data: {'tags': query },
-      success: display_postings
-    });
-    
-
-    //change "a" elements of class ".tag" so the selected ones are "hilite"d
-    $('a.tag').each(function(){
-      var that = $(this);
-      var reg_pattern = '((?:^#)' + $(this).text() + '$)|((?:^#)' + $(this).text() + '\/)|([\/]' + $(this).text() + '((?=\/)|$))';
-      var re_this = new RegExp(reg_pattern,'g');
-      var taginurl = re_this.test(window.location.hash);
-
-      that[ taginurl ? 'addClass' : 'removeClass' ]( 'hilite' );
-    });
+  $.ajax({
+    url: "flag.php",
+    type: "POST",
+    data: {'id': $post_id },
+    success: function(data) {$(this).val("dun"); console.log(data);}
   });
-  
-  // Since the event is only triggered when the hash changes, we need to trigger
-  // the event now, to handle the hash the page may have loaded with.
-  $(window).hashchange();
-});
+}

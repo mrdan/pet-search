@@ -83,4 +83,8 @@ function get_postings_data($tags, $offset, $amount){
 
     return $offset + $amount;    
 }
+
+function delete_posting() {
+    
+}
 ?>

@@ -18,7 +18,7 @@ if(isset($_POST["tags"]) && isset($_POST["email"]) && isset($_POST["photo"])) {
     for ($i=0; $i < count($tags_arr); $i++) { 
         $check_sql = "SELECT * FROM tags WHERE tag='$tags_arr[$i]'";
         $exists = DEBASER::select($check_sql);
-        if(!$exists) {
+        if(!$exists->fetchColumn()) {
     	   $tagsql = "INSERT INTO tags(tag) VALUES ('$tags_arr[$i]')";
     	   DEBASER::write($tagsql);
        }
@@ -34,6 +34,6 @@ if(isset($_POST["tags"]) && isset($_POST["email"]) && isset($_POST["photo"])) {
     $old = "/var/www/pet-search/tmp/".$photo;
     $new = "/var/www/pet-search/uploads/".$photo;
     rename($old, $new); //TODO: file not found? user must have dawdled and the tmp file got deleted. make them reupload.
+    DEBASER::disconnect();
 }
-DEBASER::disconnect();
 ?>
