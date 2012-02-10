@@ -212,12 +212,15 @@ function flagClick() {
 
   var $post_id = 0;
   $post_id = $(this).attr('post');
-  console.log($post_id);
 
   $.ajax({
     url: "flag.php",
     type: "POST",
     data: {'id': $post_id },
-    success: function(data) {$(this).val("dun"); console.log(data);}
+    success: function(data) {
+      //hide button
+
+    }
   });
+  $(this).fadeOut('slow');
 }
