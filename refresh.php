@@ -7,7 +7,6 @@ $id = "0";
 if(isset($_POST['id'])) {
 
 	$id = $_POST['id'];
-	echo $id." ! ";
 	$result = DEBASER::select("SELECT daterefreshed FROM postings WHERE id=$id");
 	$lastrefresh = $result->fetchColumn();
 
@@ -15,8 +14,6 @@ if(isset($_POST['id'])) {
 
 	if($timestamp < (time() - 24 * 60 * 60)) //more than a day ago
 		DEBASER::write("UPDATE postings SET refreshed=refreshed+1 WHERE id=$id");
-	else
-		echo "less than a day old";
 
 	DEBASER::disconnect();
 }
