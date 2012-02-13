@@ -14,7 +14,7 @@
 <DIV class='header'>Pet Search <IMG></DIV>
 <DIV class='intro'>
 	<DIV class='intro_text'>Show me (<A class='tag' href='#male'>male</A> / <A class='tag' href='#female'>female</A>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon)s.</DIV>
-	<DIV class='tagcloud'><?php display_tagcloud_js(); ?></DIV>
+	<DIV class='tagcloud'><?php display_tagcloud_js('species'); ?></DIV>
 	<DIV class='newpost'>
 		<DIV id='newpostbutton'><P>or... add a pet using <SPAN id='tags_chosen'>some</SPAN> tags</P></DIV>
 		<DIV id='newpostform'>
@@ -33,7 +33,9 @@
 	</DIV>
 </DIV>
 <DIV class='main' id='main'></DIV>
-<DIV class='footer'><A href='?p=$offset'>Next 25</A></DIV>
+<DIV class='lastPostLoader'></DIV>
+<DIV class='toTop'> Back to top </DIV>
+<DIV class='footer'></DIV>
 </DIV>
 <?PHP DEBASER::disconnect(); ?>
 <SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>

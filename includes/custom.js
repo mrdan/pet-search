@@ -5,11 +5,7 @@ $(function(){
     var hash = location.hash;
     
     //need to parse the taglist from the anchor
-    var matchtags = window.location.href.match(/^[^#]+#([a-z,0-9,-]+(?:\/[a-z,0-9,-]+)*)/);
-    var query = [];
-    if (matchtags != null) {
-      var query = matchtags[1].split('/');
-    }
+    var query = match_anchor();
 
     if (query.length == 0) {
       $('span#tags_chosen').text('some');
@@ -17,7 +13,7 @@ $(function(){
       $('input#sub_tags').val('');
     } else {    
       $('span#tags_chosen').text('these');
-      $('input#sub_tags').val(matchtags[1].replace(/\//g,' '));
+      $('input#sub_tags').val(query.join(' '));
       $('div#first').css('color', 'grey');
     }
 
@@ -25,7 +21,7 @@ $(function(){
       url: "filter.php",
       type: "POST",
       data: {'tags': query },
-      success: display_postings
+      success: display_initial_postings
     });
 
     //change "a" elements of class ".tag" so the selected ones are "hilite"d
@@ -45,6 +41,26 @@ $(function(){
 });
 
 $(document).ready(function() {
+
+  // scroll detection for "infinite scroll"
+  $(window).scroll(function(){
+    var bufferzone = $(window).scrollTop() * 0.20;
+    if  ( $(window).scrollTop() + bufferzone > ( $(document).height()- $(window).height() ) ) {
+      loadMorePosts();
+    }
+
+    /* Back to top by http://agyuku.net/2009/05/back-to-top-link-using-jquery/ */
+    if($(this).scrollTop() != 0) {
+      $('.toTop').fadeIn(); 
+    } else {
+      $('.toTop').fadeOut();
+    }
+  });
+ 
+  $('.toTop').click(function() {
+    $('body,html').animate({scrollTop:0},800);
+  }); 
+
   //select tags
   $('a.tag').click(tagClick);
 
@@ -156,6 +172,17 @@ function thumb_preview(img, selection) {
     });
 }*/
 
+//return an array of tags from the anchors in the url
+function match_anchor() {
+  var hash = location.hash;
+  var matchtags = window.location.href.match(/^[^#]+#([a-z,0-9,-]+(?:\/[a-z,0-9,-]+)*)/);
+  var query = [];
+  if (matchtags != null) {
+    var query = matchtags[1].split('/');
+  }
+  return query;
+}
+
 function tmp_addpet(data) {
   //display "done" message
   $('div#newpostform').html(data);
@@ -165,27 +192,34 @@ function tmp_addpet(data) {
     url: "filter.php",
     type: "POST",
     data: {'tags': query },
-    success: display_postings
+    success: display_initial_postings
   });
 }
 
-function display_postings(data) {
+function display_initial_postings(data) {
   if(data == '[]') {          // returns a string containing [] rather than just null or something else for some reason...
     var html = "<DIV class='posting'><P>No pets matching those tags found</P></DIV>";
     $('div#main').html(html);
   } else {
     var it = $.parseJSON(data);
-    var html = "";
+    var content = "";
     $.each(it, function(i, posting){
-      html = html +"<DIV class='posting'><IMG src='uploads/" + posting.photo+ "'/>";
-      html = html + "<P><A href=''>" + posting.email + "</A></P>";
-      html = html + "<P>" + posting.tags + "</P>";
-      html = html + "<P><BUTTON class='refresh' post='" + posting.id + "'>Refresh this post</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag this post</BUTTON></P></DIV>";
+      content = content + create_post_html(posting);
     });
-    $('div#main').html(html);
+    $('div#main').html(content);
+
     $("button.report").click(flagClick);
     $("button.refresh").click(refreshClick);
   }
+}
+
+function create_post_html(posting) {
+  var html = "";
+  html = html +"<DIV class='posting' id='"+posting.id+"'><IMG src='uploads/" + posting.photo+ "'/>";
+  html = html + "<P><A href=''>" + posting.email + "</A></P>";
+  html = html + "<P>" + posting.tags + "</P>";
+  html = html + "<P><BUTTON class='refresh' post='" + posting.id + "'>Refresh this post</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag this post</BUTTON></P></DIV>";
+  return html;
 }
 
 //rewrites the url properly when a tag is clicked
@@ -237,8 +271,37 @@ function refreshClick() {
     data: {'id': $post_id },
     success: function(data) {
       //hide button
-      console.log(data);
     }
   });
   $(this).fadeOut('slow');
+}
+
+// get post data for "infinite scroll"
+function loadMorePosts()
+{
+  $('div.lastPostLoader').html('<img src="includes/bigLoader.gif"/>');
+  var query = match_anchor();
+  var lastid = $(".posting:last").attr("id");
+  $.ajax({
+    url: "filter.php",
+    type: "POST",
+    data: {'tags': query,
+            'id': lastid },
+    success: display_more_postings
+  });
+};
+
+function display_more_postings(data) {
+  if (data != "") {
+    var it = $.parseJSON(data);
+    var content = "";
+    $.each(it, function(i, posting){
+      content = content + create_post_html(posting);
+    });
+    //$('div#main').html(content);
+    $(".posting:last").after(content);
+    $("button.report").click(flagClick);
+    $("button.refresh").click(refreshClick);
+  }
+  $('div#lastPostsLoader').empty();
 }

@@ -45,42 +45,11 @@ function display_tag_pending() {
         echo "<SPAN class='tag'>".$row['tag']."</SPAN> ";
 }
 
-function display_tagcloud_js() {
-    $result = DEBASER::select("SELECT tag FROM tags");
+// $exclude is a string name of a category you don't want the cloud to include
+function display_tagcloud_js($exclude) {
+    $result = DEBASER::select("SELECT tag FROM tags WHERE category != '$exclude' OR category IS NULL"); //mysql filters NULL even if it doesn't match the query
     foreach ($result as $row)
         echo "<A class='tag' href='#".$row['tag']."'>".$row['tag']."</A> ";
-}
-
-function get_postings_data($tags, $offset, $amount){
-
-    $sql1 = "SELECT * FROM postings ";    
-    $sql2 = "ORDER BY daterefreshed DESC LIMIT ".$offset.",".$amount;
-
-    if(!$offset)
-        $offset = 0;
-    if(!$tags)
-        $sql = $sql1.$sql2;
-    else
-    {
-        $sql_tags1 = "WHERE ";
-        for ($i=0; $i < count($tags); $i++) { 
-            $sql_tags2 = "(tags LIKE '% ".$tags[$i]." %' OR tags LIKE '".$tags[$i] ." %' OR tags LIKE '% ".$tags[$i]."' OR tags = '".$tags[$i]."') ";
-            if($i < (count($tags) - 1))
-                $sql_tags2 = $sql_tags2."AND ";
-            $sql_tags1 = $sql_tags1.$sql_tags2;
-        }
-        $sql = $sql1.$sql_tags1.$sql2;
-    }
-
-    $result = DEBASER::select($sql);
-    // jquery error plz
-    $rows = Array();
-    foreach ($result as $r) {
-        $rows[] = $r;
-    }
-    echo json_encode($rows);
-
-    return $offset + $amount;    
 }
 
 function delete_posting() {

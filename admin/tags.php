@@ -93,7 +93,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
 <DIV class='lightbox'>
 	<p>Click "Cancel" to close</p>
 	<DIV class='lb_content' id="add">
-		<FORM id="tag_add" action="admin.php" method="post">
+		<FORM id="tag_add" action="tags.php" method="post">
 			<INPUT type="text" class="newText" title="Type in your tag, it will be automatically approved..." name="newtag" />
 			<SELECT name="chosen_category">
       			<OPTION value="uncategorised">Uncategorised</OPTION>
@@ -109,7 +109,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
     </DIV>
     <DIV class='lb_content' id="recat">
     	To which category to you want to assign the tags: <SPAN id="tag_list">none</SPAN>? (This will also automatically approve the tags)
-		<FORM id="tag_assign" action="admin.php" method="post">
+		<FORM id="tag_assign" action="tags.php" method="post">
       		<SELECT name="chosen_category">
       			<OPTION value="uncategorised">Uncategorised</OPTION>
       			<OPTION value="species">Species</OPTION>
@@ -125,7 +125,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
     </DIV>
     <DIV class='lb_content' id="approve">
     	Are you sure you want to approve the tags: <SPAN id="tag_list"> none </SPAN>?
-    	<FORM id="tag_approve" action="admin.php" method="post">
+    	<FORM id="tag_approve" action="tags.php" method="post">
       		<INPUT type="hidden" id="chosen_tags" name="chosen_tags" value="" />
       		<INPUT type="hidden" name="approval" value="approval" />
       		<INPUT type="Submit" name="tag_approve_submit" value="Submit" />
@@ -134,7 +134,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
     </DIV>
     <DIV class='lb_content' id="delete">
     	    	Are you sure you want to unapprove the tags: <SPAN id="tag_list"> none </SPAN>?
-    	<FORM id="tag_delete" action="admin.php" method="post">
+    	<FORM id="tag_delete" action="tags.php" method="post">
       		<INPUT type="hidden" id="chosen_tags" name="chosen_tags" value="" />
       		<INPUT type="hidden" name="delete" value="delete" />
       		<INPUT type="Submit" name="tag_delete_submit" value="Submit" />

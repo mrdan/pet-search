@@ -1,19 +1,70 @@
 <?php require('includes/db.php'); ?>
-<?php require('includes/custom.php'); ?>
 <?php
 
-// check our gets
-$offset = 0;
+function get_postings_data($tags){
+
+    $sql1 = "SELECT * FROM postings ";    
+    $sql2 = "ORDER BY daterefreshed DESC";
+
+    if(!$tags)
+        $sql = $sql1.$sql2;
+    else
+    {
+        $sql_tags1 = "WHERE ";
+        for ($i=0; $i < count($tags); $i++) { 
+            $sql_tags2 = "(tags LIKE '% ".$tags[$i]." %' OR tags LIKE '".$tags[$i] ." %' OR tags LIKE '% ".$tags[$i]."' OR tags = '".$tags[$i]."') ";
+            if($i < (count($tags) - 1))
+                $sql_tags2 = $sql_tags2."AND ";
+            $sql_tags1 = $sql_tags1.$sql_tags2;
+        }
+        $sql = $sql1.$sql_tags1.$sql2;
+    }
+
+    $result = DEBASER::select($sql);
+    // jquery error plz
+    return $result;
+}
+
+// check our post
+$id = "0";
+$amount = 10;
+$tags = Array();
+$output = Array();
 
 if(isset($_POST['tags']))
 	$tags = $_POST['tags'];
-else
-	$tags = Array();
 
-//display_postings($tags, $offset, 25, $linkid);
-get_postings_data($tags, 0, 25);
+if(isset($_POST['id']))
+	$id = $_POST['id'];
+//display_postings($tags, $amount);
+$data = get_postings_data($tags);
+
+//filter it, we want only the rows after $id (unless $id == 0, then we want it aaaall)
+$counter = 0;
+$havefoundid = false;
+
+if (strcmp($id,"0") == 0)
+	$havefoundid = true;
+foreach ($data as $row) {
+	if(strcmp($row['id'], $id) == 0) {
+		$havefoundid = true;
+		continue; //skip the matching entry
+	}
+	if($havefoundid == true) {
+		//start using rows
+		$output[] = $row;
+		$counter++;
+	}
+	if($counter == $amount)
+		break;
+}
+
+$final = json_encode($output);
+echo $final;
 
 // close connection
 DEBASER::disconnect();
+
+
 
 ?>
