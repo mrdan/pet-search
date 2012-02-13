@@ -180,10 +180,11 @@ function display_postings(data) {
       html = html +"<DIV class='posting'><IMG src='uploads/" + posting.photo+ "'/>";
       html = html + "<P><A href=''>" + posting.email + "</A></P>";
       html = html + "<P>" + posting.tags + "</P>";
-      html = html + "<P><BUTTON class='report' post='" + posting.id + "'>Flag this post</BUTTON></P></DIV>";
+      html = html + "<P><BUTTON class='refresh' post='" + posting.id + "'>Refresh this post</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag this post</BUTTON></P></DIV>";
     });
     $('div#main').html(html);
     $("button.report").click(flagClick);
+    $("button.refresh").click(refreshClick);
   }
 }
 
@@ -220,6 +221,23 @@ function flagClick() {
     success: function(data) {
       //hide button
 
+    }
+  });
+  $(this).fadeOut('slow');
+}
+
+function refreshClick() {
+
+  var $post_id = 0;
+  $post_id = $(this).attr('post');
+
+  $.ajax({
+    url: "refresh.php",
+    type: "POST",
+    data: {'id': $post_id },
+    success: function(data) {
+      //hide button
+      console.log(data);
     }
   });
   $(this).fadeOut('slow');
