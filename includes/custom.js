@@ -282,7 +282,7 @@ function messageClick() {
   var $submit_button = $(this);
 
   // display lightbox menu
-   $('.sendmessagebox').css("visibility", "visible");
+  $('.sendmessagebox').css("visibility", "visible");
 
   //user clicked cancel, so hide everything
   $('.sendmessagebox_cancel').click(function(){
@@ -296,8 +296,6 @@ function messageClick() {
 
     $from = $('input[name=from]').val();
     $content = $('textarea[name=content]').val();
-
-    console.log("From: "+$from+" , Content: " + $content + ", ID: "+ $post_id);
 
     $.ajax({
       url: "message.php",
@@ -314,8 +312,7 @@ function messageClick() {
         $('.sendmessagebox_close').click(function() {
           $('.sendmessagebox').css("visibility", "hidden"); 
           $submit_button.fadeOut('slow');                   // fade out the original reply button, shouldn't happen until submit is clicked
-          //rewrite the form back in
-        $('.smb_content').html('<FORM id="send_message" method="post">Your email address: <INPUT type="text" title="give us your email" name="from"></INPUT><BR />Your message: <TEXTAREA title="give us your message" name="content" rows="5" cols="20">Sample</TEXTAREA><BR /><BUTTON type="button" class="sendmessagebox_submit">Send</BUTTON><BUTTON type="button" class="sendmessagebox_cancel">Cancel</BUTTON></FORM>');
+          $('.smb_content').load('index.php div.smb_content'); //rewrite the form back in
         });
       }
     });  
@@ -351,10 +348,4 @@ function display_more_postings(data) {
     $("button.message").click(messageClick);
   }
   $('div#lastPostsLoader').empty();
-}
-
-//display the correct lightbox depending on the button clicked
-function lightbox() { 
-
- 
 }
