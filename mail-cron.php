@@ -22,13 +22,16 @@
 			$headers = 'From: $our_address' . "\r\n" .'Reply-To: $row["sender"]' . "\r\n" .'X-Mailer: PHP/' . phpversion();
 			$message = $body.$content.$body2.$row['sender'];
 
-			echo "Message [".$messageid."] From [".$row['sender']."] To [".$row['email']."] sent and deleted from database".PHP_EOL;
-
 			// if(mail($to, $subject, $message, $headers))
-			/*if(true)
-				DEBASER::write("DELETE FROM messages WHERE id=$messageid"); //TODO: check result
-			else
-				continue;*/
+			if(true) {
+				$write_result = DEBASER::write("DELETE FROM messages WHERE id=$messageid");
+				var_dump($write_result);
+				if($write_result > 0)
+					echo "Message [".$messageid."] From [".$row['sender']."] To [".$row['email']."] was sent and deleted from database".PHP_EOL;
+				else
+					echo "Message [".$messageid."] From [".$row['sender']."] To [".$row['email']."] was sent but could not be deleted from database".PHP_EOL;
+			} else
+				echo "Message [".$messageid."] From [".$row['sender']."] To [".$row['email']."] could not be sent".PHP_EOL;
 		}
 	} else
 		echo "none".PHP_EOL;
@@ -40,7 +43,11 @@
 	if($result2) {
 		foreach ($result2 as $row) {
 			$id = $row['id'];
-			DEBASER::write("DELETE FROM messages WHERE id=$id"); //TODO: check result
+			$write_result = DEBASER::write("DELETE FROM messages WHERE id=$id");
+			if($write_result > 0)
+				echo "Message [".$id."] was deleted from database".PHP_EOL;
+			else
+				echo "Message [".$id."] could not be deleted".PHP_EOL;
 		}
 	} else
 		echo "none".PHP_EOL;
