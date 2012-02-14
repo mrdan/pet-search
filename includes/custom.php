@@ -19,7 +19,7 @@ function display_tag_category($category) {
         $sql = "SELECT tag FROM tags WHERE category='$category' AND approved=1 ORDER BY tag ASC";
 
     $result = DEBASER::select($sql);
-    if(count($result)==0){
+    if(!$result){
         echo "<SPAN id='greyed'>No tags found for category </SPAN>";
         return;
     }
@@ -28,7 +28,8 @@ function display_tag_category($category) {
         $tag = $row['tag'];
         $sql_tagcount = "SELECT COUNT(*) FROM postings WHERE (tags LIKE '$tag' OR tags LIKE '%$tag%' OR tags LIKE '%$tag' OR tags LIKE '$tag%')";
         $result_tagcount = DEBASER::select($sql_tagcount);
-        $actual_tagcount = $result_tagcount->fetchColumn();
+        if($result_tagcount)
+            $actual_tagcount = $result_tagcount[0]["COUNT(*)"];
         echo "<SPAN class='tag'>".$row['tag']." </SPAN> <SPAN id='greyed'>($actual_tagcount)</SPAN> ";
     }
 }
@@ -37,7 +38,7 @@ function display_tag_pending() {
     
     $sql = "SELECT tag FROM tags WHERE approved=0";
     $result = DEBASER::select($sql);
-    if(count($result)==0){
+    if(!$result){
         echo "<SPAN id='greyed'>No tags pending </SPAN>";
         return;
     }

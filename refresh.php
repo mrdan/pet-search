@@ -1,5 +1,4 @@
 <?php require('includes/db.php'); ?>
-<?php require('includes/custom.php'); ?>
 <?php
 
 $id = "0";
@@ -7,8 +6,8 @@ $id = "0";
 if(isset($_POST['id'])) {
 
 	$id = $_POST['id'];
-	$result = DEBASER::select("SELECT daterefreshed FROM postings WHERE id=$id");
-	$lastrefresh = $result->fetchColumn();
+	$result = DEBASER::select("SELECT daterefreshed FROM postings WHERE id=$id LIMIT 1"); //TODO: Check $result
+	$lastrefresh = $result[0]["daterefreshed"];
 
 	$timestamp = strtotime($lastrefresh);
 

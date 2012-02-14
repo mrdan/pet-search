@@ -16,9 +16,9 @@ if(isset($_POST["tags"]) && isset($_POST["email"]) && isset($_POST["photo"])) {
 
     //put any new tags into tags table
     for ($i=0; $i < count($tags_arr); $i++) { 
-        $check_sql = "SELECT * FROM tags WHERE tag='$tags_arr[$i]'";
+        $check_sql = "SELECT * FROM tags WHERE tag='$tags_arr[$i]' LIMIT 1"; //TODO: Limit SELECT
         $exists = DEBASER::select($check_sql);
-        if(!$exists->fetchColumn()) {
+        if($exists) {
     	   $tagsql = "INSERT INTO tags(tag) VALUES ('$tags_arr[$i]')";
     	   DEBASER::write($tagsql);
        }

@@ -210,6 +210,7 @@ function display_initial_postings(data) {
 
     $("button.report").click(flagClick);
     $("button.refresh").click(refreshClick);
+    $("button.message").click(messageClick);
   }
 }
 
@@ -218,7 +219,7 @@ function create_post_html(posting) {
   html = html +"<DIV class='posting' id='"+posting.id+"'><IMG src='uploads/" + posting.photo+ "'/>";
   html = html + "<P><A href=''>" + posting.email + "</A></P>";
   html = html + "<P>" + posting.tags + "</P>";
-  html = html + "<P><BUTTON class='refresh' post='" + posting.id + "'>Refresh this post</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag this post</BUTTON></P></DIV>";
+  html = html + "<P><BUTTON class='message' post='" + posting.id + "'>Reply</BUTTON><BUTTON class='refresh' post='" + posting.id + "'>Refresh this post</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag this post</BUTTON></P></DIV>";
   return html;
 }
 
@@ -276,6 +277,51 @@ function refreshClick() {
   $(this).fadeOut('slow');
 }
 
+function messageClick() {
+  $post_id = $(this).attr('post');
+  var $submit_button = $(this);
+
+  // display lightbox menu
+   $('.sendmessagebox').css("visibility", "visible");
+
+  //user clicked cancel, so hide everything
+  $('.sendmessagebox_cancel').click(function(){
+    $('.sendmessagebox').css("visibility", "hidden");
+  });
+
+  $('.sendmessagebox_submit').click(function() {
+    
+    $from = 'daniel.doyle@gmail.com';
+    $content = "hi";
+
+    $from = $('input[name=from]').val();
+    $content = $('textarea[name=content]').val();
+
+    console.log("From: "+$from+" , Content: " + $content + ", ID: "+ $post_id);
+
+    $.ajax({
+      url: "message.php",
+      type: "POST",
+      data: {'id': $post_id,
+            'from': $from,
+            'content': $content },
+      success: function(data) {
+        //hide button
+        console.log(data);
+        // replace smb_content to show success message
+        $('.smb_content').html('Message sent!<br /><BUTTON type="button" class="sendmessagebox_close">Close</BUTTON>');
+        $('div.sendmessagebox p').html('Click "Close" to close');
+        $('.sendmessagebox_close').click(function() {
+          $('.sendmessagebox').css("visibility", "hidden"); 
+          $submit_button.fadeOut('slow');                   // fade out the original reply button, shouldn't happen until submit is clicked
+          //rewrite the form back in
+        $('.smb_content').html('<FORM id="send_message" method="post">Your email address: <INPUT type="text" title="give us your email" name="from"></INPUT><BR />Your message: <TEXTAREA title="give us your message" name="content" rows="5" cols="20">Sample</TEXTAREA><BR /><BUTTON type="button" class="sendmessagebox_submit">Send</BUTTON><BUTTON type="button" class="sendmessagebox_cancel">Cancel</BUTTON></FORM>');
+        });
+      }
+    });  
+  });
+}
+
 // get post data for "infinite scroll"
 function loadMorePosts()
 {
@@ -302,6 +348,13 @@ function display_more_postings(data) {
     $(".posting:last").after(content);
     $("button.report").click(flagClick);
     $("button.refresh").click(refreshClick);
+    $("button.message").click(messageClick);
   }
   $('div#lastPostsLoader').empty();
+}
+
+//display the correct lightbox depending on the button clicked
+function lightbox() { 
+
+ 
 }

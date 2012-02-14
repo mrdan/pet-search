@@ -182,6 +182,34 @@ div.category > div#tags{
 div.category > span#greyed{
 	color: gray;
 }
+/* sendmessage lightbox */
+div.sendmessagebox {
+	visibility: hidden;
+	position:fixed; /* keeps the lightbox window in the current viewport */
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,.7);
+    text-align:center;
+}
+
+div.sendmessagebox p {
+    text-align:right;
+    color:#fff;
+    margin-right:20px;
+    font-size:12px;
+}
+
+div.sendmessagebox > div.smb_content {
+	max-width: 350px;
+	max-height: 250px;
+	margin:0 auto;
+	background-color: white;
+	box-shadow:0 0 25px #111;
+    -webkit-box-shadow:0 0 25px #111;
+    -moz-box-shadow:0 0 25px #111;
+}
 
 /* admin.php lightbox */
 div.lightbox {

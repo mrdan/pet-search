@@ -10,6 +10,17 @@
 //
 // Begin site
 ?>
+<DIV class='sendmessagebox'>
+	<p>Click "Cancel" to close</p>
+	<DIV class='smb_content'>
+    	<FORM id="send_message" method="post">
+    		Your email address: <INPUT type="text" title="give us your email" name="from"></INPUT><BR />
+    		Your message: <TEXTAREA title="give us your message" name="content" rows="5" cols="20">Sample</TEXTAREA><BR />
+			<BUTTON type="button" class="sendmessagebox_submit">Send</BUTTON>
+    		<BUTTON type="button" class="sendmessagebox_cancel">Cancel</BUTTON>
+    	</FORM>
+    </DIV>
+</DIV>
 <DIV class='container'>
 <DIV class='header'>Pet Search <IMG></DIV>
 <DIV class='intro'>
@@ -18,7 +29,7 @@
 	<DIV class='newpost'>
 		<DIV id='newpostbutton'><P>or... add a pet using <SPAN id='tags_chosen'>some</SPAN> tags</P></DIV>
 		<DIV id='newpostform'>
-			<FORM id="pet_add" action="index.php" method="post">
+			<FORM id="pet_add" method="post">
 				<DIV id='first'>First, click some tags above</DIV>
 				<DIV id='second'>Second, <INPUT type="text" class='newText' id='email' title="give us your email" name="email" /></DIV>
 				<DIV id='third'>Third, <button type="file" id="imageUpload"/>upload a picture</button></DIV>

@@ -20,7 +20,7 @@ function get_postings_data($tags){
         $sql = $sql1.$sql_tags1.$sql2;
     }
 
-    $result = DEBASER::select($sql);
+    $result = DEBASER::select($sql); //TODO: check $result
     // jquery error plz
     return $result;
 }

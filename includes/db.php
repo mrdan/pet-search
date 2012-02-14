@@ -45,7 +45,7 @@ class Debaser {
 		try 
 		{
 			self::getInstance();
-			return self::$instance->query($sql);
+			return self::$instance->query($sql)->fetchAll();
 		}
 		catch (PDOException $e) 
 		{

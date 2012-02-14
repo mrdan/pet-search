@@ -10,9 +10,9 @@ if(isset($_POST['id'])) {
 	$id = $_POST['id'];
 
 	//check if id already exists
-	$exists = DEBASER::select("SELECT * FROM flagged WHERE id=$id");
+	$exists = DEBASER::select("SELECT * FROM flagged WHERE id=$id LIMIT 1");
 
-	if($exists->fetchColumn()) {
+	if($exists) {
 		//if it does check is protected
 		foreach($exists as $post) {
 			if($post['protected'] == 0)
