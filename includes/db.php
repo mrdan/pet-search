@@ -40,7 +40,7 @@ class Debaser {
     	}
 	}
 
-	//only for select sql statements. returns array of results.
+	//only for select sql statements. returns array of results. probably not a good idea to use on massive result sets.
 	public static function select($sql) {
 		try 
 		{
