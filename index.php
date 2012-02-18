@@ -21,6 +21,16 @@
     	</FORM>
     </DIV>
 </DIV>
+<DIV class='delmessagebox'>
+	<p>Click "Cancel" to close</p>
+	<DIV class='dmb_content'>
+    	<FORM id="del_form" method="post">
+    		Enter the email address you used to place the ad and hit delete (there is no undo): <INPUT type="text" title="Enter the email address you used to place the ad and hit delete" name="user"></INPUT><BR />
+			<BUTTON type="button" class="delmessagebox_submit">Delete</BUTTON>
+    		<BUTTON type="button" class="delmessagebox_cancel">Cancel</BUTTON>
+    	</FORM>
+    </DIV>
+</DIV>
 <DIV class='container'>
 <DIV class='header'>Pet Search <IMG></DIV>
 <DIV class='intro'>

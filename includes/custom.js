@@ -211,6 +211,7 @@ function display_initial_postings(data) {
     $("button.report").click(flagClick);
     $("button.refresh").click(refreshClick);
     $("button.message").click(messageClick);
+    $("button.found").click(foundClick);
   }
 }
 
@@ -219,7 +220,7 @@ function create_post_html(posting) {
   html = html +"<DIV class='posting' id='"+posting.id+"'><IMG src='uploads/" + posting.photo+ "'/>";
   html = html + "<P><A href=''>" + posting.email + "</A></P>";
   html = html + "<P>" + posting.tags + "</P>";
-  html = html + "<P><BUTTON class='message' post='" + posting.id + "'>Reply</BUTTON><BUTTON class='refresh' post='" + posting.id + "'>Refresh this post</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag this post</BUTTON></P></DIV>";
+  html = html + "<P><BUTTON class='message' post='" + posting.id + "'>Reply</BUTTON><BUTTON class='refresh' post='" + posting.id + "'>Refresh</BUTTON><BUTTON class='found' post='" + posting.id + "'>Delete</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag</BUTTON></P></DIV>";
   return html;
 }
 
@@ -305,7 +306,6 @@ function messageClick() {
             'content': $content },
       success: function(data) {
         //hide button
-        console.log(data);
         // replace smb_content to show success message
         $('.smb_content').html('Message sent!<br /><BUTTON type="button" class="sendmessagebox_close">Close</BUTTON>');
         $('div.sendmessagebox p').html('Click "Close" to close');
@@ -316,6 +316,42 @@ function messageClick() {
         });
       }
     });  
+  });
+}
+
+function foundClick() {
+  $post_id = $(this).attr('post');
+  var $submit_button = $(this);
+
+  // display lightbox menu
+  $('.delmessagebox').css("visibility", "visible");
+
+  //user clicked cancel, so hide everything
+  $('.delmessagebox_cancel').click(function(){
+    $('.delmessagebox').css("visibility", "hidden");
+  });
+
+  $('.delmessagebox_submit').click(function() {
+    $user = $('input[name=user]').val();
+    console.log($user)
+    $.ajax({
+      url: "delete.php",
+      type: "POST",
+      data: {'id': $post_id,
+            'user': $user },
+      success: function(data) { 
+        console.log(data);
+        //reload posts
+        $(window).hashchange();
+        //success message
+        $('.dmb_content').html('Post deleted<br /><BUTTON type="button" class="delmessagebox_close">Close</BUTTON>');
+        $('div.delmessagebox p').html('Click "Close" to close');
+        $('.delmessagebox_close').click(function() {
+          $('.delmessagebox').css("visibility", "hidden");
+          $('.dmb_content').load('index.php div.dmb_content'); //rewrite the form back in
+        });
+      }
+    });
   });
 }
 
@@ -346,6 +382,7 @@ function display_more_postings(data) {
     $("button.report").click(flagClick);
     $("button.refresh").click(refreshClick);
     $("button.message").click(messageClick);
+    $("button.found").click(foundClick);
   }
   $('div#lastPostsLoader').empty();
 }
