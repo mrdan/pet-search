@@ -21,7 +21,7 @@ $(function(){
       url: "filter.php",
       type: "POST",
       data: {'tags': query },
-      success: display_initial_postings
+      success: display_postings
     });
 
     //change "a" elements of class ".tag" so the selected ones are "hilite"d
@@ -192,27 +192,31 @@ function tmp_addpet(data) {
     url: "filter.php",
     type: "POST",
     data: {'tags': query },
-    success: display_initial_postings
+    success: display_postings
   });
 }
 
-function display_initial_postings(data) {
+function display_postings(data) {
   if(data == '[]') {          // returns a string containing [] rather than just null or something else for some reason...
     var html = "<DIV class='posting'><P>No pets matching those tags found</P></DIV>";
     $('div#main').html(html);
-  } else {
+  } else if (data != "") {
     var it = $.parseJSON(data);
     var content = "";
     $.each(it, function(i, posting){
       content = content + create_post_html(posting);
     });
-    $('div#main').html(content);
-
+    if($(".posting:last").length == 0) //check if there're already posts
+      $('div#main').html(content);
+    else
+      $(".posting:last").after(content);
     $("button.report").click(flagClick);
     $("button.refresh").click(refreshClick);
     $("button.message").click(messageClick);
     $("button.found").click(foundClick);
   }
+  if($(".posting:last").length != 0)
+    $('div#lastPostsLoader').empty();
 }
 
 function create_post_html(posting) {
@@ -356,6 +360,7 @@ function foundClick() {
 }
 
 // get post data for "infinite scroll"
+//TODO: don't show loader if there's no more posts
 function loadMorePosts()
 {
   $('div.lastPostLoader').html('<img src="includes/bigLoader.gif"/>');
@@ -366,23 +371,6 @@ function loadMorePosts()
     type: "POST",
     data: {'tags': query,
             'id': lastid },
-    success: display_more_postings
+    success: display_postings
   });
 };
-
-function display_more_postings(data) {
-  if (data != "") {
-    var it = $.parseJSON(data);
-    var content = "";
-    $.each(it, function(i, posting){
-      content = content + create_post_html(posting);
-    });
-    //$('div#main').html(content);
-    $(".posting:last").after(content);
-    $("button.report").click(flagClick);
-    $("button.refresh").click(refreshClick);
-    $("button.message").click(messageClick);
-    $("button.found").click(foundClick);
-  }
-  $('div#lastPostsLoader').empty();
-}
