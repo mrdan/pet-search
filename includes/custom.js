@@ -173,4 +173,3 @@ function thumb_preview(img, selection) {
         marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
     });
 }*/
-

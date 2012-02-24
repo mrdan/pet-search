@@ -31,7 +31,7 @@ div.container {
 	line-height: 1;
 	margin: 50px auto;
 	margin-top: 0px;
-	width: 600px;
+	width: 765px;
 }
 
 div.header {
@@ -120,22 +120,40 @@ div#username { display: none;}
 */
 div.main {
 	/* hai */
+	margin-top: 5px;
 }
 
 /* posts */
 div.posting {
     background-color: white;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-: 0px;
     height: 150px;
     overflow:hidden;
+    position: relative;
+    min-width: 50px;
+    width: 250px;
+    float: left;
 }
 
 div.posting img {
+	position: absolute;
     float: left;
-    width: 300px;
-    height: 150px;
+    width: auto;
+    height: auto;
     margin-right: 10px;
+}
+
+div.posting > div#content {
+	position:absolute; /* absolute position (so we can position it where we want)*/
+	height: 100%;
+	/* styling below */
+	background-color:black;
+	font-family: 'tahoma';
+	font-size:15px;
+	color:white;
+	opacity:0.7; /* transparency */
+	filter:alpha(opacity=70); /* IE transparency */
+	display: none;
 }
 
 div.posting > div#tags {
