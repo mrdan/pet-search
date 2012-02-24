@@ -110,6 +110,8 @@ div#photobox {
 div.newpost > input.newText { width: 300px; }
 div.newpost > input.newTextActive { color: #a1a1a1; font-style: italic; }
 
+/*div#username { display: none;}*/
+
 /*
 
 	index.php main

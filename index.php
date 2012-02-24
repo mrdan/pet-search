@@ -49,6 +49,7 @@ if(!isset($_GET['p'])) { //not a permalink
 				<DIV id='photobox'>
 					<IMG id='thumb' src='loading.jpg' width=100 height=100/>
 				</DIV>
+				<DIV id='username'>You're not supposed to see this, so leave it alone: <INPUT type="text" name="username" value="" /></DIV>
 				<INPUT type="hidden" id="sub_tags" name="sub_tags" value="" />
 				<INPUT type="hidden" id="photo_name" name="photo_name" value="0" />
 				<BUTTON type="button" class='pet_add_submit' name="pet_add_submit" value="Submit">Submit</BUTTON>

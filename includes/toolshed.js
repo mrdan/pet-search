@@ -18,8 +18,13 @@ function tmp_addpet(data) {
     url: "filter.php",
     type: "POST",
     data: {'tags': query },
-    success: display_postings
+    success: refresh_postings
   });
+}
+
+function refresh_postings(data) {
+  $('div#main').empty();
+  display_postings(data);
 }
 
 function display_postings(data) {

@@ -21,7 +21,7 @@ $(function(){
       url: "filter.php",
       type: "POST",
       data: {'tags': query },
-      success: display_postings
+      success: refresh_postings
     });
 
     //change "a" elements of class ".tag" so the selected ones are "hilite"d
@@ -130,6 +130,7 @@ $(document).ready(function() {
         'tags': $('input#sub_tags').val(),
         'photo': $('input#photo_name').val(),
         'email': $('input#email').val(),
+        'username': $('input#username').val()
       },
       //process response
       success: tmp_addpet,
