@@ -25,12 +25,34 @@ function get_postings_data($tags){
     return $result;
 }
 
+function get_post_data($id) {
+    $sql = "SELECT * FROM postings WHERE id=$id LIMIT 1";
+    $result = DEBASER::select($sql); //TODO: check $result
+    return $result;
+}
+
 // check our post
 $id = "0";
 $amount = 10;
+$perma = "0";
 $tags = Array();
 $output = Array();
 
+// we only want one post cause it's a permalink
+if(isset($_POST['perma'])) {
+    $perma = $_POST['perma'];
+    $data = get_post_data($perma);
+    $output[] = $data[0];
+
+    $final = json_encode($output);
+    echo $final;
+
+    // close connection
+    DEBASER::disconnect();
+    return;
+}
+
+// handles everything else, even if tags is empty
 if(isset($_POST['tags']))
 	$tags = $_POST['tags'];
 
@@ -58,6 +80,7 @@ foreach ($data as $row) {
 	if($counter == $amount)
 		break;
 }
+
 
 $final = json_encode($output);
 echo $final;

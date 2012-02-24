@@ -9,6 +9,9 @@
 <?php
 //
 // Begin site
+
+if(!isset($_GET['p'])) { //not a permalink
+
 ?>
 <DIV class='sendmessagebox'>
 	<p>Click "Cancel" to close</p>
@@ -62,5 +65,23 @@
 <SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
 <SCRIPT type="text/javascript" src="includes/jquery.ba-hashchange.js"></SCRIPT>
 <SCRIPT type="text/javascript" src="includes/ajaxupload.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/toolshed.js"></SCRIPT>
 <SCRIPT type="text/javascript" src="includes/custom.js"></SCRIPT>
 </BODY></HTML>
+<?PHP
+} else { //permalink url found, TODO: apache mod_rewrite to take /[0-9]/ as /?p=[0-9]
+?>
+<DIV class='container'>
+<DIV class='header'>Pet Search <IMG></DIV>
+<DIV class='main' id='main' perma=<?PHP echo "'".$_GET['p']."'"; ?>></DIV>
+<DIV class='footer'></DIV>
+</DIV>
+<?PHP DEBASER::disconnect(); ?>
+<SCRIPT type="text/javascript" src="includes/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/toolshed.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="includes/permalink.js"></SCRIPT>
+</BODY></HTML>
+
+<?PHP
+}
+?>
