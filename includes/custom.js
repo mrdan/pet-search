@@ -123,6 +123,7 @@ $(document).ready(function() {
   $('button.pet_add_submit').click( function(){
     //get data from form
     //send to addpet.php
+    console.log($('input[name=username]').val());
     $.ajax({
       url: "addpet.php",
       type: "POST",
@@ -130,7 +131,7 @@ $(document).ready(function() {
         'tags': $('input#sub_tags').val(),
         'photo': $('input#photo_name').val(),
         'email': $('input#email').val(),
-        'username': $('input#username').val()
+        'username': $('input[name=username]').val()
       },
       //process response
       success: tmp_addpet,

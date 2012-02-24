@@ -1,12 +1,11 @@
 <?php require('includes/db.php'); ?>
 <?php
 
+$success_string = 'all done. bye bye.';
 //check honeypot
 if(isset($_POST['username']))
 {
-    echo "lol";
-    var_dump($_POST['username']);
-    die();
+    echo $success_string; // pretend it worked
 }
 
 //check and process $_POST
@@ -38,7 +37,7 @@ if(isset($_POST["tags"]) && isset($_POST["email"]) && isset($_POST["photo"]) && 
    
 	DEBASER::write($sql);
     
-    echo 'all done. bye bye.';
+    echo $success_string;
     $old = "/var/www/pet-search/tmp/".$photo;
     $new = "/var/www/pet-search/uploads/".$photo;
     rename($old, $new); //TODO: file not found? user must have dawdled and the tmp file got deleted. make them reupload.
