@@ -86,7 +86,8 @@ div.newpost > div#newpostbutton p {
 	margin: 0;
 	padding: 0;
 	width: auto;
-	float: left;
+	float: right;
+	text-align: right;
 }
 
 div.newpost >  div#newpostbutton:hover p{
@@ -121,28 +122,35 @@ div.main {
 	/* hai */
 }
 
+/* posts */
 div.posting {
     background-color: white;
     margin-top: 5px;
     margin-bottom: 5px;
-    width: 100%;
     height: 150px;
     overflow:hidden;
 }
 
 div.posting img {
     float: left;
-    width: 150px;
+    width: 300px;
     height: 150px;
     margin-right: 10px;
 }
 
-div.posting p {
+div.posting > div#tags {
+	height: 125px;
+}
+
+div.posting > div#buttons {
+	float: right;
 }
 
 div.lastPostLoader {
 	text-align: center;
 }
+
+/* posts end */
 
 div.toTop {
 	width:100px;

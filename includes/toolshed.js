@@ -55,9 +55,10 @@ function display_postings(data) {
 function create_post_html(posting) {
   var html = "";
   html = html +"<DIV class='posting' id='"+posting.id+"'><IMG src='uploads/" + posting.photo+ "'/>";
-  html = html + "<P><A href=''>" + posting.email + "</A></P>";
-  html = html + "<P>" + posting.tags + "</P>";
-  html = html + "<P><BUTTON class='message' post='" + posting.id + "'>Reply</BUTTON><BUTTON class='refresh' post='" + posting.id + "'>Refresh</BUTTON><BUTTON class='found' post='" + posting.id + "'>Delete</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag</BUTTON><A href='?p=" + posting.id + "'>permalink</A></P></DIV>";
+  //html = html + "<P><A href=''>" + posting.email + "</A></P>";
+  html = html + "<DIV id='tags'>" + posting.tags + "</DIV>";
+  html = html + "<DIV id='buttons'><BUTTON class='message' post='" + posting.id + "'>Reply</BUTTON><BUTTON class='refresh' post='" + posting.id + "'>Refresh</BUTTON><BUTTON class='found' post='" + posting.id + "'>Delete</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag</BUTTON><A href='?p=" + posting.id + "'>permalink</A></DIV>";
+  html = html + "</DIV>";
   return html;
 }
 
