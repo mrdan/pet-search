@@ -1,5 +1,5 @@
 body {
-	background-color: #F5F5F5;
+	background-color: #FFFFFF;
 }
 
 a {
@@ -10,12 +10,13 @@ a:hover {
 	color: #F0A830;
 }
 
-a.tag {
+a {
 	color:black;
 }
 
-a.tag:hover {
+a:hover {
 	background-color: cyan;
+	color:black;
 }
 
 .hilite {
@@ -26,23 +27,22 @@ div.container {
 	/*color: #333; */
 	/*color: #5E412F;*/
 	color: black;
-	font-size: 1em;
 	font-family: "helvetica neue", helvetica, arial, serif;
-	line-height: 1;
 	margin: 50px auto;
 	margin-top: 0px;
-	width: 765px;
+	width: 780px;
 }
 
 div.header {
-	border-bottom: 5px solid black;
-	font-size: 75px;
-	padding-bottom: 5px;
-	padding-top: 5px;
-	font-weight: bold;
-	text-transform: uppercase;
+	border-bottom: 1px dotted grey;
+	font-size: 40px;
+	padding-bottom: 15px;
+	padding-top: 15px;
 	text-align: justify;
 	 /*overflow:auto;*/
+}
+
+div.footer {
 }
 
 div.header img {
@@ -53,15 +53,15 @@ div.header img {
 
 div.intro {
     width: 100%;
-    padding-top: 20px;
-    padding-bottom: 0px;
-    border-bottom: 5px solid black
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px dotted grey;
 }
 
 div.tagcloud {
-	padding-top: 15px;
-	padding-bottom: 15px;
 	text-align: justify;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
 /* 
@@ -69,7 +69,6 @@ div.tagcloud {
 */
 div.newpost {
 	width: 100%;
-	border-top: 1px dotted black;
 	overflow: auto;
 }
 
@@ -124,9 +123,39 @@ div.main {
 }
 
 /* posts */
+div.perma_posting {
+	margin: 5px;
+	margin-top: 10px;
+}
+
+div.perma_posting > div#content {
+	height: 150px;
+}
+
+div.perma_posting img {
+	float: left;
+	margin-right: 5px;
+	height: 150px;
+	width: 250px;
+}
+
+div.perma_posting > div#buttons {
+	margin-top: 10px;
+	margin-bottom: 10px;;
+}
+
+div#buttons > a {
+	margin-right: 10px;
+	float: right;
+}
+
+
+a.posting {
+	text-decoration: none;
+}
+
 div.posting {
-    background-color: white;
-    margin-: 0px;
+    margin: 5px;
     height: 150px;
     overflow:hidden;
     position: relative;
@@ -137,10 +166,6 @@ div.posting {
 
 div.posting img {
 	position: absolute;
-    float: left;
-    width: auto;
-    height: auto;
-    margin-right: 10px;
 }
 
 div.posting > div#content {
@@ -154,6 +179,8 @@ div.posting > div#content {
 	opacity:0.7; /* transparency */
 	filter:alpha(opacity=70); /* IE transparency */
 	display: none;
+	width: 250px;
+	padding: 5px;
 }
 
 div.posting > div#tags {
@@ -172,8 +199,8 @@ div.lastPostLoader {
 
 div.toTop {
 	width:100px;
-    border:1px solid #ccc;
-    background:#f7f7f7;
+    border:1px dotted #BEBEBE;
+    background: #FFFFFF;
     text-align:center;
     padding:5px;
     position:fixed; /* this is the magic */
@@ -182,7 +209,7 @@ div.toTop {
     cursor:pointer;
     display:none;
     color:#333;
-    font-family:verdana;
+    font-family:helvetica;
     font-size:11px;
 }
 

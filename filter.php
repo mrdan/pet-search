@@ -33,7 +33,7 @@ function get_post_data($id) {
 
 // check our post
 $id = "0";
-$amount = 10;
+$amount = 21;
 $perma = "0";
 $tags = Array();
 $output = Array();

@@ -52,20 +52,18 @@ function display_postings(data) {
     $("button.found").click(foundClick);
 
     $("div.posting").hover(function(){
-            $("div#content", this).fadeIn();
-        }, function() {
-            $("div#content", this).fadeOut();
-        });
+        $("div#content", this).fadeIn();
+      }, function() {
+        $("div#content", this).fadeOut();
+    });
 }
 
 function create_post_html(posting) {
   var html = "";
-  html = html +"<DIV class='posting' id='"+posting.id+"'><IMG src='uploads/" + posting.photo+ "'/>";
-  //html = html + "<P><A href=''>" + posting.email + "</A></P>";
+  html = html +"<A class='posting' href='?p="+posting.id+"'><DIV class='posting' id='"+posting.id+"'><IMG src='uploads/" + posting.photo+ "'/>";
   html = html + "<DIV id='content'>";
   html = html + "<DIV id='tags'>" + posting.tags + "</DIV>";
-  html = html + "<DIV id='buttons'><BUTTON class='message' post='" + posting.id + "'>Reply</BUTTON><BUTTON class='refresh' post='" + posting.id + "'>Refresh</BUTTON><BUTTON class='found' post='" + posting.id + "'>Delete</BUTTON><BUTTON class='report' post='" + posting.id + "'>Flag</BUTTON><A href='?p=" + posting.id + "'>permalink</A></DIV>";
-  html = html + "</DIV></DIV>";
+  html = html + "</DIV></DIV></A>";
   return html;
 }
 

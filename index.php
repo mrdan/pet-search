@@ -1,5 +1,5 @@
 <HTML>
-<HEAD><TITLE>Pet Search Test</TITLE>
+<HEAD><TITLE>Lost Pets Test</TITLE>
 <meta http-equiv="content-script-type" content="text/javascript">
 <LINK type="text/css" rel="stylesheet" href="includes/style.css" />
 </HEAD>
@@ -35,11 +35,11 @@ if(!isset($_GET['p'])) { //not a permalink
     </DIV>
 </DIV>
 <DIV class='container'>
-<DIV class='header'>Pet Search <IMG></DIV>
+<DIV class='header'>Lost Pets</DIV>
 <DIV class='intro'>
-	<DIV class='intro_text'>Show me (<A class='tag' href='#male'>male</A> / <A class='tag' href='#female'>female</A>) (neutered / non-neutered) (dog / cat / fox / giraffe / goat / pokemon)s.</DIV>
-	<DIV class='tagcloud'><?php display_tagcloud_js('species'); ?></DIV>
-	<DIV class='newpost'>
+	<DIV class='tagcloud'><?php display_tagcloud_js('species'); ?></DIV>	
+</DIV>
+<DIV class='newpost'>
 		<DIV id='newpostbutton'><P>or... add a pet using <SPAN id='tags_chosen'>some</SPAN> tags</P></DIV>
 		<DIV id='newpostform'>
 			<FORM id="pet_add" method="post">
@@ -55,7 +55,6 @@ if(!isset($_GET['p'])) { //not a permalink
 				<BUTTON type="button" class='pet_add_submit' name="pet_add_submit" value="Submit">Submit</BUTTON>
     		</FORM>
 		</DIV>
-	</DIV>
 </DIV>
 <DIV class='main' id='main'></DIV>
 <DIV class='lastPostLoader'></DIV>
@@ -73,7 +72,7 @@ if(!isset($_GET['p'])) { //not a permalink
 } else { //permalink url found, TODO: apache mod_rewrite to take /[0-9]/ as /?p=[0-9]
 ?>
 <DIV class='container'>
-<DIV class='header'>Pet Search <IMG></DIV>
+<DIV class='header'>Lost Pets</DIV>
 <DIV class='main' id='main' perma=<?PHP echo "'".$_GET['p']."'"; ?>></DIV>
 <DIV class='footer'></DIV>
 </DIV>
