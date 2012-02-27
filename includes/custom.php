@@ -48,7 +48,7 @@ function display_tag_pending() {
 
 // $exclude is a string name of a category you don't want the cloud to include
 function display_tagcloud($exclude) {
-    $result = DEBASER::select("SELECT tag,category FROM tags WHERE category != '$exclude' OR category IS NULL ORDER BY category"); //mysql filters NULL even if it doesn't match the query
+    $result = DEBASER::select("SELECT tag,category FROM tags WHERE category != '$exclude' OR category IS NULL ORDER BY category, tag"); //mysql filters NULL even if it doesn't match the query
     $prev_category = "";
     foreach ($result as $row) {
         if (strcmp($prev_category, $row['category']))
@@ -60,7 +60,7 @@ function display_tagcloud($exclude) {
 
 // $cat is a string name of the category you want
 function display_tag_cat($cat) {
-    $result = DEBASER::select("SELECT tag FROM tags WHERE category = '$cat'"); //mysql filters NULL even if it doesn't match the query
+    $result = DEBASER::select("SELECT tag FROM tags WHERE category = '$cat' ORDER BY tag"); //mysql filters NULL even if it doesn't match the query
     foreach ($result as $row) {
         echo "<A class='tag' href='#".$row['tag']."'>".$row['tag']."</A> ";
         $prev_category = $row['category'];
