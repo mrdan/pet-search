@@ -44,18 +44,18 @@ function display_postings(data) {
     else
       $(".posting:last").after(content);
   }
-  $('div#lastPostsLoader').empty();
-      // Need to lay all our hooks
-    $("button.report").click(flagClick);
-    $("button.refresh").click(refreshClick);
-    $("button.message").click(messageClick);
-    $("button.found").click(foundClick);
+  $('div.lastPostLoader').empty();
+  // Need to lay all our hooks
+  $("button.report").click(flagClick);
+  $("button.refresh").click(refreshClick);
+  $("button.message").click(messageClick);
+  $("button.found").click(foundClick);
 
-    $("div.posting").hover(function(){
-        $("div#content", this).fadeIn();
-      }, function() {
-        $("div#content", this).fadeOut();
-    });
+  $("div.posting").hover(function(){
+      $("div#content", this).fadeIn();
+    }, function() {
+      $("div#content", this).fadeOut();
+  });
 }
 
 function create_post_html(posting) {

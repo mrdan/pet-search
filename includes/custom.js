@@ -141,35 +141,6 @@ $(document).ready(function() {
     });
   });
 
-  //photobox selection
-  /*
-  $('<div><img src="puppy1.jpg" style="position: relative;" /><div>')
-        .css({
-            float: 'right',
-            position: 'relative',
-            overflow: 'hidden',
-            width: '100px',
-            height: '100px'
-        })
-        .insertAfter($('#photobox_photo'));
-
-  $('#photobox_photo').imgAreaSelect({
-    aspectRatio: '1:1',
-    handles: true,
-    onSelectEnd: thumb_preview
-  });
-  */
 
 });
-/*
-function thumb_preview(img, selection) {
-    var scaleX = 100 / (selection.width || 1);
-    var scaleY = 100 / (selection.height || 1);
-  
-    $('#photobox_photo + div > img').css({
-        width: Math.round(scaleX * 150) + 'px', //needs to match any specified heigh of image in index.php
-        height: Math.round(scaleY * 150) + 'px',
-        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
-        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
-    });
-}*/
+
