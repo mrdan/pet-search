@@ -1,0 +1,57 @@
+div.newpostform {
+	margin: 10px;
+}
+
+div#header {
+	font-size: 20px;
+	text-align: justify;
+	border-bottom: 1px dotted grey;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div#content {
+	margin: 5px;
+	margin-bottom: 40px;
+	line-height: 1.25;
+}
+
+div#photobox {
+	width: 100%;
+	margin: 5px;
+	display: none;
+}
+
+img#thumb {
+	max-height: 250px;
+	max-width: 600px;
+}
+
+div.newpost > div#newpostbutton p {
+	text-decoration: underline;
+	cursor: pointer;
+	margin: 0;
+	padding: 0;
+	width: auto;
+	float: right;
+	text-align: right;
+}
+
+div.newpost >  div#newpostbutton:hover p{
+	background-color: cyan;
+}
+
+div.newpost > div#newpostform {
+	padding-top: 10px;
+	display: none;
+}
+
+div.newpost > div#first {
+}
+
+
+
+div.newpost > input.newText { width: 300px; }
+div.newpost > input.newTextActive { color: #000; font-style: italic; }
+
+div#username { display: none;}

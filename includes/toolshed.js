@@ -45,12 +45,6 @@ function display_postings(data) {
       $(".posting:last").after(content);
   }
   $('div.lastPostLoader').empty();
-  // Need to lay all our hooks
-  $("button.report").click(flagClick);
-  $("button.refresh").click(refreshClick);
-  $("button.message").click(messageClick);
-  $("button.found").click(foundClick);
-
   $("div.posting").hover(function(){
       $("div#content", this).fadeIn();
     }, function() {
@@ -88,115 +82,7 @@ function tagClick() {
     return false;																			//this stops the rest of the click event happening (i.e. the url ressetting to the actual href (just the one tag) of the link)
 }
 
-function flagClick() {
 
-  var $post_id = 0;
-  $post_id = $(this).attr('post');
-
-  $.ajax({
-    url: "flag.php",
-    type: "POST",
-    data: {'id': $post_id },
-    success: function(data) {
-      //hide button
-
-    }
-  });
-  $(this).fadeOut('slow');
-}
-
-function refreshClick() {
-
-  var $post_id = 0;
-  $post_id = $(this).attr('post');
-
-  $.ajax({
-    url: "refresh.php",
-    type: "POST",
-    data: {'id': $post_id },
-    success: function(data) {
-      //hide button
-    }
-  });
-  $(this).fadeOut('slow');
-}
-
-function messageClick() {
-  $post_id = $(this).attr('post');
-  var $submit_button = $(this);
-
-  // display lightbox menu
-  $('.sendmessagebox').css("visibility", "visible");
-
-  //user clicked cancel, so hide everything
-  $('.sendmessagebox_cancel').click(function(){
-    $('.sendmessagebox').css("visibility", "hidden");
-  });
-
-  $('.sendmessagebox_submit').click(function() {
-    
-    $from = 'daniel.doyle@gmail.com';
-    $content = "hi";
-
-    $from = $('input[name=from]').val();
-    $content = $('textarea[name=content]').val();
-
-    $.ajax({
-      url: "message.php",
-      type: "POST",
-      data: {'id': $post_id,
-            'from': $from,
-            'content': $content },
-      success: function(data) {
-        //hide button
-        // replace smb_content to show success message
-        $('.smb_content').html('Message sent!<br /><BUTTON type="button" class="sendmessagebox_close">Close</BUTTON>');
-        $('div.sendmessagebox p').html('Click "Close" to close');
-        $('.sendmessagebox_close').click(function() {
-          $('.sendmessagebox').css("visibility", "hidden"); 
-          $submit_button.fadeOut('slow');                   // fade out the original reply button, shouldn't happen until submit is clicked
-          $('.smb_content').load('index.php div.smb_content'); //rewrite the form back in
-        });
-      }
-    });  
-  });
-}
-
-function foundClick() {
-  $post_id = $(this).attr('post');
-  var $submit_button = $(this);
-
-  // display lightbox menu
-  $('.delmessagebox').css("visibility", "visible");
-
-  //user clicked cancel, so hide everything
-  $('.delmessagebox_cancel').click(function(){
-    $('.delmessagebox').css("visibility", "hidden");
-  });
-
-  $('.delmessagebox_submit').click(function() {
-    $user = $('input[name=user]').val();
-    console.log($user)
-    $.ajax({
-      url: "delete.php",
-      type: "POST",
-      data: {'id': $post_id,
-            'user': $user },
-      success: function(data) { 
-        console.log(data);
-        //reload posts
-        $(window).hashchange();
-        //success message
-        $('.dmb_content').html('Post deleted<br /><BUTTON type="button" class="delmessagebox_close">Close</BUTTON>');
-        $('div.delmessagebox p').html('Click "Close" to close');
-        $('.delmessagebox_close').click(function() {
-          $('.delmessagebox').css("visibility", "hidden");
-          $('.dmb_content').load('index.php div.dmb_content'); //rewrite the form back in
-        });
-      }
-    });
-  });
-}
 
 // get post data for "infinite scroll"
 //TODO: don't show loader if there's no more posts

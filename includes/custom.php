@@ -60,7 +60,7 @@ function display_tagcloud($exclude) {
 
 // $cat is a string name of the category you want
 function display_tag_cat($cat) {
-    $result = DEBASER::select("SELECT tag FROM tags WHERE category = '$cat' ORDER BY tag"); //mysql filters NULL even if it doesn't match the query
+    $result = DEBASER::select("SELECT tag,category FROM tags WHERE category = '$cat' ORDER BY tag"); //mysql filters NULL even if it doesn't match the query
     foreach ($result as $row) {
         echo "<A class='tag' href='#".$row['tag']."'>".$row['tag']."</A> ";
         $prev_category = $row['category'];
