@@ -149,6 +149,7 @@ if(isset($_POST["chosen_tags"]) && isset($_POST["delete"])) {
 
 
 
+<DIV class='category'><DIV id="title">Status</DIV><?php display_tag_category("status"); ?></DIV>
 <DIV class='category'><DIV id="title">Species</DIV><?php display_tag_category("species"); ?></DIV>
 <DIV class='category'><DIV id="title">Medical</DIV><?php display_tag_category("medical"); ?></DIV>
 <DIV class='category'><DIV id="title">Visual</DIV><?php display_tag_category("visual"); ?></DIV>

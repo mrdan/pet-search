@@ -46,9 +46,21 @@ function display_tag_pending() {
         echo "<SPAN class='tag'>".$row['tag']."</SPAN> ";
 }
 
-// $exclude is a string name of a category you don't want the cloud to include
+// $exclude is a string of space-seperated categories you don't want the cloud to include
 function display_tagcloud($exclude) {
-    $result = DEBASER::select("SELECT tag,category FROM tags WHERE category != '$exclude' OR category IS NULL ORDER BY category, tag"); //mysql filters NULL even if it doesn't match the query
+
+    $baddies = explode(" ", $exclude);
+    $sql_string = "SELECT tag,category FROM tags WHERE";
+    $amnt = count($baddies);
+    for ($x = 0; $x < $amnt; $x++) {
+        $sql_string = $sql_string." category != '$baddies[$x]' ";
+        if ($amnt > 1 && $x != ($amnt - 1))
+            $sql_string = $sql_string."AND ";
+    }
+    $sql_string = $sql_string."OR category IS NULL ORDER BY category DESC, tag";
+
+    $result = DEBASER::select($sql_string); //mysql filters NULL even if it doesn't match the query
+
     $prev_category = "";
     foreach ($result as $row) {
         if (strcmp($prev_category, $row['category']))

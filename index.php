@@ -17,7 +17,7 @@ if(!isset($_GET['p'])) { //not a permalink
 <DIV class='container'>
 <DIV class='header'>Lost & Found Pets</DIV>
 <DIV class='intro'>
-	<DIV class='tagcloud'><?php display_tag_cat('species'); display_tagcloud('species'); ?></DIV>	
+	<DIV class='tagcloud'><?php display_tag_cat('status'); echo "// "; display_tag_cat('species'); display_tagcloud('species status'); ?></DIV>	
 </DIV>
 <DIV class='newpost'>
 		<DIV id='newpostbutton'><P><A class="addpetbutton" title="Add a pet" href="addpet.php">or... add a pet using <SPAN id='tags_chosen'>some</SPAN> tags</A></P></DIV>

@@ -87,6 +87,14 @@ function rand_species() {
     return $pet_species;
 }
 
+// return a string containing a status
+function rand_status() {
+    $status = Array("lost", "found");
+    $pet_status = $status[array_rand($status,1)];                    // take one status
+
+    return $pet_status;
+}
+
 // returns an array containing $count strings containing a set of pet tags. $unique == 1 means return only unique sets (doesn't compare order of tags)
 function rand_tags($count, $unique) {
 
@@ -174,8 +182,9 @@ if($unique == 1) {
 reset($combolist);                                                          // just in case the pointer has moved
 while (list($u,$t) = each($combolist)) {
     $s = rand_species();
+    $stat = rand_status();
     echo $u.": ".$t."<BR />";
-    $t = $s." ".$t;
+    $t = $s." ".$stat." ".$t;
     $sql = "INSERT INTO postings(tags,email) VALUES('$t','$u')";
     DEBASER::write($sql);
 }
